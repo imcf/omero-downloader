@@ -50,7 +50,7 @@ def cancel_script():
 
 # Create the main window
 root = tk.Tk()
-root.title("Dataset Runner")
+root.title("OMERO Downloader")
 
 # Create and place the label for dataset type selection
 label_type = tk.Label(root, text="Select type (Project(s), Dataset(s) or Image(s)):")
@@ -62,7 +62,7 @@ dataset_type_combobox.set("Dataset")  # Set default value
 dataset_type_combobox.pack(pady=10)
 
 # Create and place the input field for dataset numbers
-label_numbers = tk.Label(root, text="Enter dataset numbers (comma-separated):")
+label_numbers = tk.Label(root, text="Enter IDs (comma-separated):")
 label_numbers.pack(pady=10)
 
 entry = tk.Entry(root, width=50)
@@ -106,11 +106,11 @@ progress_label = tk.Label(root, text="", fg="blue")
 progress_label.pack(pady=10)
 
 # Create and place the run button
-run_button = tk.Button(root, text="Run Script", command=lambda: threading.Thread(target=run_script).start())
+run_button = tk.Button(root, text="Download", command=lambda: threading.Thread(target=run_script).start())
 run_button.pack(pady=20)
 
 # Create and place the cancel button
-cancel_button = tk.Button(root, text="Cancel", command=cancel_script)
+cancel_button = tk.Button(root, text="Cancel current download", command=cancel_script)
 cancel_button.pack(pady=10)
 
 # Start the GUI event loop
