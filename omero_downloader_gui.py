@@ -25,6 +25,7 @@ class OmeroDownloaderApp:
 
     def create_widgets(self):
         """Create and layout the GUI widgets."""
+
         self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
         self.dataset_type_combobox = self.create_combobox(["Project", "Dataset", "Image"], "Dataset")
         self.create_label("Enter IDs (comma-separated):")
@@ -41,7 +42,7 @@ class OmeroDownloaderApp:
         self.progress_label = tk.Label(self.root, text="", fg="blue")
         self.progress_label.pack(pady=10)
 
-        self.create_button("Download all", self.start_download_thread)
+        self.create_button("Download all Images", self.start_download_thread)
         self.create_button("Cancel current download", self.cancel_script)
 
 
@@ -83,6 +84,7 @@ class OmeroDownloaderApp:
 
     def create_combobox(self, values, default_value):
         """Create a combobox widget.
+        The combobox widget combines a text field with a pop-down list of values.
 
         Parameters
         ----------
@@ -118,11 +120,13 @@ class OmeroDownloaderApp:
 
     def start_download_thread(self):
         """Start the download process in a separate thread."""
+
         threading.Thread(target=self.run_script).start()
 
 
     def run_script(self):
         """Run the download script for the specified datasets."""
+
         dataset_type = self.dataset_type_combobox.get()
         dataset_numbers = self.entry.get().split(',')
         storage_path = self.path_entry.get().strip().replace("\\", "/")
@@ -139,7 +143,7 @@ class OmeroDownloaderApp:
 
 
     def process_dataset_number(self, base_command, dataset_type, number):
-        """Process a single dataset number for downloading.
+        """Process a single dataset ID for downloading.
 
         This method formats the base command with the dataset number, updates the progress label,
         and executes the command to download the dataset. It handles errors and updates the progress
@@ -172,9 +176,6 @@ class OmeroDownloaderApp:
     def update_progress_label(self, text):
         """Update the progress label with the given text.
 
-        This method sets the text of the progress label in the GUI to provide feedback
-        on the current operation.
-
         Parameters
         ----------
         text : str
@@ -185,8 +186,6 @@ class OmeroDownloaderApp:
 
     def show_error(self, message):
         """Display an error message in a message box.
-
-        This method shows an error message box with the provided message.
 
         Parameters
         ----------
