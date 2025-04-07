@@ -29,9 +29,8 @@ def run_script():
             # Start the command in a separate thread
             current_process = subprocess.Popen(command, shell=True)
             current_process.wait()  # Wait for the process to complete
-            messagebox.showinfo("Success", f"Executed: {command}")
         except subprocess.CalledProcessError as e:
-            messagebox.showerror("Error", f"Failed to execute: {command}\n{e}")
+            messagebox.showerror("Error", f"Failed to download: {number}\n{e}")
         except Exception as e:
             messagebox.showerror("Error", str(e))
         finally:
