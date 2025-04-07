@@ -11,47 +11,45 @@ OBJ_INFO = "obj should be 'Project:ID', 'Dataset:ID' or 'Image:ID'"
 
 """
 Usage:
-python download_pdi.py Project:123 my_project_directory
+python download_pdi.py Project:123 my_project_directory hostname username password
 """
 
 # this script originated from Will Moore: https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
 
+def download_datasets(conn, datasets, target_dir):
 
-def download_datasets(datasets, target_dir):
+    for dataset in datasets:
+        print("Downloading Dataset", dataset.id, dataset.name)
+        dc = DownloadControl()
+        dataset_dir = os.path.join(target_dir, dataset.name)
+        os.makedirs(dataset_dir, exist_ok=True)
 
-    with cli_login() as cli:
-        cli.register("download", DownloadControl, "download_pdi.py")
+        for image in dataset.listChildren():
+            if image.getFileset() is None:
+                print("No files to download for Image", image.id)
+                continue
+            # image_dir = os.path.join(dataset_dir, image.name)
+            # If each image is a single file, or are guaranteed not to clash
+            # then we don't need image_dir. Can use dataset_dir instead
+            
+            fileset = image.getFileset()
+            if fileset is None:
+                print('Image has no Fileset')
+                continue
+            dc.download_fileset(conn, fileset, dataset_dir)
 
-        for dataset in datasets:
-            print("Downloading Dataset", dataset.id, dataset.name)
-            dataset_dir = os.path.join(target_dir, dataset.name)
-            os.makedirs(dataset_dir, exist_ok=True)
+                
+def download_image(conn, image, target_dir):
+    dc = DownloadControl()
 
-            for image in dataset.listChildren():
-                print("image.id : ", image.id) # the id of the image
-                print("image.id type: ", type(image.id)) # is an int
-                if image.getFileset() is None:
-                    print("No files to download for Image", image.id)
-                    continue
-                image_dir = os.path.join(dataset_dir, image.name)
-                # If each image is a single file, or are guaranteed not to clash
-                # then we don't need image_dir. Could use dataset_dir instead
-                cli.invoke(["download", f"Image:{image.id}", dataset_dir])
-
-
-def download_image(image, target_dir):
-
-    with cli_login() as cli:
-        cli.register("download", DownloadControl, "download_pdi.py")
-
-        if image.getFileset() is None:
-            print("No files to download for Image", image.id)
-        cli.invoke(["download", f"Image:{image.id}", target_dir])
+    fileset = image.getFileset()
+    if image.getFileset() is None:
+        print("No files to download for Image", image.id)
+    dc.download_fileset(conn, fileset, target_dir)    
 
 
-def download_object(cli, args):
+def download_object(conn, args):
 
-    conn = BlitzGateway(client_obj=cli._client)
     conn.SERVICE_OPTS.setOmeroGroup(-1)
 
     obj = args.obj
@@ -79,10 +77,10 @@ def download_object(cli, args):
     print("Downloading to ", target_dir)
 
     if obj_type == "Image":
-        download_image(parent, target_dir)
+        download_image(conn, parent, target_dir)
     
     if obj_type == "Dataset" or obj_type == "Project":
-        download_datasets(datasets, target_dir)
+        download_datasets(conn, datasets, target_dir)
 
 
 
@@ -90,10 +88,24 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'")
     parser.add_argument("target", help="Directory name to download into")
+    parser.add_argument("hostname", help="OMERO server address")
+    parser.add_argument("username", help="OMERO user name")
+    parser.add_argument("password", help="OMERO password")
     args = parser.parse_args(argv)
 
-    with cli_login() as cli:
-        download_object(cli, args)
+    hostname = args.hostname
+    username = args.username
+    password = args.password
+    port = 4064  # Default OMERO port
+    conn = BlitzGateway(username, password, host=hostname, port=port)
+    if conn.connect():
+        print("Connected to OMERO server")
+    else:
+        print("Failed to connect to OMERO server")
+
+    download_object(conn, args)
+
+    conn.close()
 
 
 if __name__ == "__main__":

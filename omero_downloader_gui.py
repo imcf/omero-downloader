@@ -12,7 +12,11 @@ def run_script():
     dataset_numbers = entry.get().split(',')
     storage_path = path_entry.get().strip()  # Get the user-defined storage path
     storage_path = storage_path.replace("\\", "/")
-    base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}"'
+    server_address = server_entry.get().strip()  # Get the server address
+    username = username_entry.get().strip()  # Get the username
+    password = password_entry.get().strip()  # Get the password
+
+    base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
     
     for number in dataset_numbers:
         number = number.strip()  # Remove any extra spaces
@@ -25,9 +29,8 @@ def run_script():
             # Start the command in a separate thread
             current_process = subprocess.Popen(command, shell=True)
             current_process.wait()  # Wait for the process to complete
-            messagebox.showinfo("Success", f"Executed: {command}")
         except subprocess.CalledProcessError as e:
-            messagebox.showerror("Error", f"Failed to execute: {command}\n{e}")
+            messagebox.showerror("Error", f"Failed to download: {number}\n{e}")
         except Exception as e:
             messagebox.showerror("Error", str(e))
         finally:
@@ -73,6 +76,30 @@ label_path.pack(pady=10)
 path_entry = tk.Entry(root, width=50)
 path_entry.pack(pady=10)
 path_entry.insert(0, "D:\\Data")  # Set default value
+
+# Create and place the label for server address
+label_server = tk.Label(root, text="Enter server address:")
+label_server.pack(pady=10)
+
+# Create an input field for the server address
+server_entry = tk.Entry(root, width=50)
+server_entry.pack(pady=10)
+
+# Create and place the label for username
+label_username = tk.Label(root, text="Enter username:")
+label_username.pack(pady=10)
+
+# Create an input field for the username
+username_entry = tk.Entry(root, width=50)
+username_entry.pack(pady=10)
+
+# Create and place the label for password
+label_password = tk.Label(root, text="Enter password:")
+label_password.pack(pady=10)
+
+# Create an input field for the password
+password_entry = tk.Entry(root, width=50, show="*")  # Use show="*" to hide the password
+password_entry.pack(pady=10)
 
 # Create and place the progress label
 progress_label = tk.Label(root, text="", fg="blue")
