@@ -39,14 +39,13 @@ def download_datasets(conn, datasets, target_dir):
             dc.download_fileset(conn, fileset, dataset_dir)
 
                 
-def download_image(image, target_dir):
+def download_image(conn, image, target_dir):
+    dc = DownloadControl()
 
-    with cli_login() as cli:
-        cli.register("download", DownloadControl, "download_pdi.py")
-
-        if image.getFileset() is None:
-            print("No files to download for Image", image.id)
-        cli.invoke(["download", f"Image:{image.id}", target_dir])
+    fileset = image.getFileset()
+    if image.getFileset() is None:
+        print("No files to download for Image", image.id)
+    dc.download_fileset(conn, fileset, target_dir)    
 
 
 def download_object(cli, args):
@@ -79,7 +78,7 @@ def download_object(cli, args):
     print("Downloading to ", target_dir)
 
     if obj_type == "Image":
-        download_image(parent, target_dir)
+        download_image(conn, parent, target_dir)
     
     if obj_type == "Dataset" or obj_type == "Project":
         download_datasets(conn, datasets, target_dir)
