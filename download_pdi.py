@@ -48,9 +48,8 @@ def download_image(conn, image, target_dir):
     dc.download_fileset(conn, fileset, target_dir)    
 
 
-def download_object(cli, args):
+def download_object(conn, args):
 
-    conn = BlitzGateway(client_obj=cli._client)
     conn.SERVICE_OPTS.setOmeroGroup(-1)
 
     obj = args.obj
