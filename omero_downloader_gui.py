@@ -53,7 +53,7 @@ root = tk.Tk()
 root.title("OMERO Downloader")
 
 # Create and place the label for dataset type selection
-label_type = tk.Label(root, text="Select type: Project(s), Dataset(s) or Image(s))")
+label_type = tk.Label(root, text="Select type: Project(s), Dataset(s) or Image(s)")
 label_type.pack(pady=10)
 
 # Create a combobox for selecting dataset type
