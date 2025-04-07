@@ -53,11 +53,11 @@ root = tk.Tk()
 root.title("Dataset Runner")
 
 # Create and place the label for dataset type selection
-label_type = tk.Label(root, text="Select type (Dataset or Project):")
+label_type = tk.Label(root, text="Select type (Project(s), Dataset(s) or Image(s)):")
 label_type.pack(pady=10)
 
 # Create a combobox for selecting dataset type
-dataset_type_combobox = ttk.Combobox(root, values=["Dataset", "Project"])
+dataset_type_combobox = ttk.Combobox(root, values=["Project", "Dataset", "Image"])
 dataset_type_combobox.set("Dataset")  # Set default value
 dataset_type_combobox.pack(pady=10)
 
