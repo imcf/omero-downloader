@@ -3,6 +3,7 @@ import sys
 import os
 
 from omero.cli import cli_login, CLI
+import omero.clients
 from omero.gateway import BlitzGateway
 
 from omero.plugins.download import DownloadControl
@@ -83,7 +84,6 @@ def download_object(conn, args):
         download_datasets(conn, datasets, target_dir)
 
 
-
 def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'")
@@ -97,7 +97,11 @@ def main(argv):
     username = args.username
     password = args.password
     port = 4064  # Default OMERO port
-    conn = BlitzGateway(username, password, host=hostname, port=port)
+
+    client = omero.client(hostname, port)
+    session = client.createSession(username, password)
+    conn = BlitzGateway(client_obj=client)
+
     if conn.connect():
         print("Connected to OMERO server")
     else:
@@ -106,6 +110,7 @@ def main(argv):
     download_object(conn, args)
 
     conn.close()
+    print("Connection closed")
 
 
 if __name__ == "__main__":
