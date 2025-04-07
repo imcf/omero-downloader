@@ -80,6 +80,7 @@ path_entry.insert(0, "D:\\Data")  # Set default value
 # Create and place the label for server address
 label_server = tk.Label(root, text="Enter server address:")
 label_server.pack(pady=10)
+label_server.insert(0, "omero.biozentrum.unibas.ch")
 
 # Create an input field for the server address
 server_entry = tk.Entry(root, width=50)
