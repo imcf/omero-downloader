@@ -143,7 +143,7 @@ class OmeroDownloaderApp:
 
 
     def process_dataset_number(self, base_command, dataset_type, number):
-        """Process a single dataset ID for downloading.
+        """Process a Project, Dataset or Image ID for downloading.
 
         This method formats the base command with the dataset number, updates the progress label,
         and executes the command to download the dataset. It handles errors and updates the progress
