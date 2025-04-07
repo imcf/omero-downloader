@@ -38,13 +38,13 @@ def run_script():
             progress_label.config(text="")  # Clear the progress label after completion
 
     # Show a completion message after all datasets/projects have been processed
-    messagebox.showinfo("Complete", f"All {dataset_type}s have been processed.")
+    messagebox.showinfo("Complete", f"Download of all {dataset_type}s is completed.")
 
 def cancel_script():
     global current_process
     if current_process:
         current_process.terminate()  # Terminate the running process
-        messagebox.showinfo("Cancelled", "The process has been cancelled.")
+        messagebox.showinfo("Cancelled", "The current download has been cancelled.")
         current_process = None
         progress_label.config(text="")  # Clear the progress label on cancel
 
@@ -53,7 +53,7 @@ root = tk.Tk()
 root.title("OMERO Downloader")
 
 # Create and place the label for dataset type selection
-label_type = tk.Label(root, text="Select type (Project(s), Dataset(s) or Image(s)):")
+label_type = tk.Label(root, text="Select type: Project(s), Dataset(s) or Image(s))")
 label_type.pack(pady=10)
 
 # Create a combobox for selecting dataset type
