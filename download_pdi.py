@@ -11,7 +11,7 @@ OBJ_INFO = "obj should be 'Project:ID', 'Dataset:ID' or 'Image:ID'"
 
 """
 Usage:
-python download_pdi.py Project:123 my_project_directory
+python download_pdi.py Project:123 my_project_directory hostname username password
 """
 
 # this script originated from Will Moore: https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
@@ -88,10 +88,24 @@ def main(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument("obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'")
     parser.add_argument("target", help="Directory name to download into")
+    parser.add_argument("hostname", help="OMERO server address")
+    parser.add_argument("username", help="OMERO user name")
+    parser.add_argument("password", help="OMERO password")
     args = parser.parse_args(argv)
 
-    with cli_login() as cli:
-        download_object(cli, args)
+    hostname = args.hostname
+    username = args.username
+    password = args.password
+    port = 4064  # Default OMERO port
+    conn = BlitzGateway(username, password, host=hostname, port=port)
+    if conn.connect():
+        print("Connected to OMERO server")
+    else:
+        print("Failed to connect to OMERO server")
+
+    download_object(conn, args)
+
+    conn.close()
 
 
 if __name__ == "__main__":
