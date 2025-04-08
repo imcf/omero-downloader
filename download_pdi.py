@@ -73,14 +73,14 @@ def download_object(conn, args):
         obj_type = obj.split(":")[0]
     except:
         print(OBJ_INFO)
-
     parent = conn.getObject(obj_type, obj_id)
+
     if parent is None:
         print(f"Not Found: {args.obj}")
         return
 
-    datasets = []
     target_dir = args.target
+    datasets = []
 
     if obj_type == "Dataset":
         datasets.append(parent)
@@ -92,9 +92,11 @@ def download_object(conn, args):
         return
     else:
         print(OBJ_INFO)
-    print(f"Downloading to {target_dir}")
+        return
 
-    print("Downloading to ", target_dir)
+    print(f"Downloading to {target_dir}")
+    download_datasets(conn, datasets, target_dir)
+
 
 def parse_object_id(obj):
     """Parse the object ID and type from the given string.
