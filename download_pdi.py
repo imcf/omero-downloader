@@ -15,7 +15,9 @@ Usage:
 python download_pdi.py Project:123 my_project_directory hostname username password
 """
 
-# this script originated from Will Moore: https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
+# this script originated from Will Moore:
+# https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
+
 
 def download_datasets(conn, datasets, target_dir):
 
@@ -32,21 +34,21 @@ def download_datasets(conn, datasets, target_dir):
             # image_dir = os.path.join(dataset_dir, image.name)
             # If each image is a single file, or are guaranteed not to clash
             # then we don't need image_dir. Can use dataset_dir instead
-            
+
             fileset = image.getFileset()
             if fileset is None:
-                print('Image has no Fileset')
+                print("Image has no Fileset")
                 continue
             dc.download_fileset(conn, fileset, dataset_dir)
 
-                
+
 def download_image(conn, image, target_dir):
     dc = DownloadControl()
 
     fileset = image.getFileset()
     if image.getFileset() is None:
         print("No files to download for Image", image.id)
-    dc.download_fileset(conn, fileset, target_dir)    
+    dc.download_fileset(conn, fileset, target_dir)
 
 
 def download_object(conn, args):
@@ -79,14 +81,16 @@ def download_object(conn, args):
 
     if obj_type == "Image":
         download_image(conn, parent, target_dir)
-    
+
     if obj_type == "Dataset" or obj_type == "Project":
         download_datasets(conn, datasets, target_dir)
 
 
 def main(argv):
     parser = argparse.ArgumentParser()
-    parser.add_argument("obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'")
+    parser.add_argument(
+        "obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'"
+    )
     parser.add_argument("target", help="Directory name to download into")
     parser.add_argument("hostname", help="OMERO server address")
     parser.add_argument("username", help="OMERO user name")

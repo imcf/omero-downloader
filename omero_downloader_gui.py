@@ -22,18 +22,21 @@ class OmeroDownloaderApp:
 
         self.create_widgets()
 
-
     def create_widgets(self):
         """Create and layout the GUI widgets."""
 
         self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
-        self.dataset_type_combobox = self.create_combobox(["Project", "Dataset", "Image"], "Dataset")
+        self.dataset_type_combobox = self.create_combobox(
+            ["Project", "Dataset", "Image"], "Dataset"
+        )
         self.create_label("Enter IDs (comma-separated):")
         self.entry = self.create_entry(width=50)
         self.create_label("Enter storage path:")
         self.path_entry = self.create_entry(width=50, default_value="D:\\Data")
         self.create_label("Enter server address:")
-        self.server_entry = self.create_entry(width=50, default_value="omero.biozentrum.unibas.ch")
+        self.server_entry = self.create_entry(
+            width=50, default_value="omero.biozentrum.unibas.ch"
+        )
         self.create_label("Enter username:")
         self.username_entry = self.create_entry(width=50)
         self.create_label("Enter password:")
@@ -45,7 +48,6 @@ class OmeroDownloaderApp:
         self.create_button("Download all Images", self.start_download_thread)
         self.create_button("Cancel current download", self.cancel_script)
 
-
     def create_label(self, text):
         """Create a label widget.
 
@@ -56,7 +58,6 @@ class OmeroDownloaderApp:
         """
         label = tk.Label(self.root, text=text)
         label.pack(pady=10)
-
 
     def create_entry(self, width, default_value=None, show=None):
         """Create an entry widget.
@@ -81,7 +82,6 @@ class OmeroDownloaderApp:
             entry.insert(0, default_value)
         return entry
 
-
     def create_combobox(self, values, default_value):
         """Create a combobox widget.
         The combobox widget combines a text field with a pop-down list of values.
@@ -103,7 +103,6 @@ class OmeroDownloaderApp:
         combobox.pack(pady=10)
         return combobox
 
-
     def create_button(self, text, command):
         """Create a button widget.
 
@@ -117,18 +116,16 @@ class OmeroDownloaderApp:
         button = tk.Button(self.root, text=text, command=command)
         button.pack(pady=20)
 
-
     def start_download_thread(self):
         """Start the download process in a separate thread."""
 
         threading.Thread(target=self.run_script).start()
 
-
     def run_script(self):
         """Run the download script for the specified datasets."""
 
         dataset_type = self.dataset_type_combobox.get()
-        dataset_numbers = self.entry.get().split(',')
+        dataset_numbers = self.entry.get().split(",")
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         server_address = self.server_entry.get().strip()
         username = self.username_entry.get().strip()
@@ -139,8 +136,9 @@ class OmeroDownloaderApp:
         for number in map(str.strip, dataset_numbers):
             self.process_dataset_number(base_command, dataset_type, number)
 
-        messagebox.showinfo("Complete", f"Download of all {dataset_type}s is completed.")
-
+        messagebox.showinfo(
+            "Complete", f"Download of all {dataset_type}s is completed."
+        )
 
     def process_dataset_number(self, base_command, dataset_type, number):
         """Process a Project, Dataset or Image ID for downloading.
@@ -172,7 +170,6 @@ class OmeroDownloaderApp:
             self.current_process = None
             self.update_progress_label("")
 
-
     def update_progress_label(self, text):
         """Update the progress label with the given text.
 
@@ -183,7 +180,6 @@ class OmeroDownloaderApp:
         """
         self.progress_label.config(text=text)
 
-
     def show_error(self, message):
         """Display an error message in a message box.
 
@@ -193,7 +189,6 @@ class OmeroDownloaderApp:
             The error message to display.
         """
         messagebox.showerror("Error", message)
-
 
     def cancel_script(self):
         """Cancel the current download process.
