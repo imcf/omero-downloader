@@ -67,7 +67,7 @@ def download_object(conn, args):
 
     conn.SERVICE_OPTS.setOmeroGroup(-1)
 
-    obj = args.obj
+    obj_type, obj_id = parse_object_id(args.obj)
     try:
         obj_id = int(obj.split(":")[1])
         obj_type = obj.split(":")[0]
