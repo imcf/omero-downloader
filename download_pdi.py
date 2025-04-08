@@ -76,7 +76,8 @@ def download_object(conn, args):
 
     parent = conn.getObject(obj_type, obj_id)
     if parent is None:
-        print("Not Found:", obj)
+        print(f"Not Found: {args.obj}")
+        return
 
     datasets = []
     target_dir = args.target
@@ -130,8 +131,8 @@ def main(argv):
     parser.add_argument("password", help="OMERO password")
     args = parser.parse_args(argv)
 
-    hostname = args.hostname
-    username = args.username
+    client = omero.client(args.hostname, 4064)  # Default OMERO port
+    session = client.createSession(args.username, args.password)
     password = args.password
     port = 4064  # Default OMERO port
 
