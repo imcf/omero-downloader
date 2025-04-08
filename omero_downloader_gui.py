@@ -3,103 +3,208 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 import threading
 
-# Global variable to keep track of the current process
-current_process = None
 
-def run_script():
-    global current_process
-    dataset_type = dataset_type_combobox.get()
-    dataset_numbers = entry.get().split(',')
-    storage_path = path_entry.get().strip()
-    storage_path = storage_path.replace("\\", "/")
-    server_address = server_entry.get().strip()
-    username = username_entry.get().strip()
-    password = password_entry.get().strip() 
+class OmeroDownloaderApp:
+    """A GUI application for downloading datasets from OMERO."""
 
-    base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
-    
-    for number in dataset_numbers:
-        number = number.strip()  # Remove extra spaces
+    def __init__(self, root):
+        """
+        Initialize the OmeroDownloaderApp.
+
+        Parameters
+        ----------
+        root : tk.Tk
+            The root window for the Tkinter application.
+        """
+        self.root = root
+        self.root.title("OMERO Downloader")
+        self.current_process = None
+
+        self.create_widgets()
+
+    def create_widgets(self):
+        """Create and layout the GUI widgets."""
+
+        self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
+        self.dataset_type_combobox = self.create_combobox(
+            ["Project", "Dataset", "Image"], "Dataset"
+        )
+        self.create_label("Enter IDs (comma-separated):")
+        self.entry = self.create_entry(width=50)
+        self.create_label("Enter storage path:")
+        self.path_entry = self.create_entry(width=50, default_value="D:\\Data")
+        self.create_label("Enter server address:")
+        self.server_entry = self.create_entry(
+            width=50, default_value="omero.biozentrum.unibas.ch"
+        )
+        self.create_label("Enter username:")
+        self.username_entry = self.create_entry(width=50)
+        self.create_label("Enter password:")
+        self.password_entry = self.create_entry(width=50, show="*")
+
+        self.progress_label = tk.Label(self.root, text="", fg="blue")
+        self.progress_label.pack(pady=10)
+
+        self.create_button("Download all Images", self.start_download_thread)
+        self.create_button("Cancel current download", self.cancel_script)
+
+    def create_label(self, text):
+        """Create a label widget.
+
+        Parameters
+        ----------
+        text : str
+            The text to display on the label.
+        """
+        label = tk.Label(self.root, text=text)
+        label.pack(pady=10)
+
+    def create_entry(self, width, default_value=None, show=None):
+        """Create an entry widget.
+
+        Parameters
+        ----------
+        width : int
+            The width of the entry widget.
+        default_value : str, optional
+            The default value to insert into the entry (default is None).
+        show : str, optional
+            The character to display for password entry (default is None).
+
+        Returns
+        -------
+        tk.Entry
+            The created entry widget.
+        """
+        entry = tk.Entry(self.root, width=width, show=show)
+        entry.pack(pady=10)
+        if default_value:
+            entry.insert(0, default_value)
+        return entry
+
+    def create_combobox(self, values, default_value):
+        """Create a combobox widget.
+        The combobox widget combines a text field with a pop-down list of values.
+
+        Parameters
+        ----------
+        values : list of str
+            The list of values for the combobox.
+        default_value : str
+            The default value to set in the combobox.
+
+        Returns
+        -------
+        ttk.Combobox
+            The created combobox widget.
+        """
+        combobox = ttk.Combobox(self.root, values=values)
+        combobox.set(default_value)
+        combobox.pack(pady=10)
+        return combobox
+
+    def create_button(self, text, command):
+        """Create a button widget.
+
+        Parameters
+        ----------
+        text : str
+            The text to display on the button.
+        command : callable
+            The function to call when the button is clicked.
+        """
+        button = tk.Button(self.root, text=text, command=command)
+        button.pack(pady=20)
+
+    def start_download_thread(self):
+        """Start the download process in a separate thread."""
+
+        threading.Thread(target=self.run_script).start()
+
+    def run_script(self):
+        """Run the download script for the specified datasets."""
+
+        dataset_type = self.dataset_type_combobox.get()
+        dataset_numbers = self.entry.get().split(",")
+        storage_path = self.path_entry.get().strip().replace("\\", "/")
+        server_address = self.server_entry.get().strip()
+        username = self.username_entry.get().strip()
+        password = self.password_entry.get().strip()
+
+        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
+
+        for number in map(str.strip, dataset_numbers):
+            self.process_dataset_number(base_command, dataset_type, number)
+
+        messagebox.showinfo(
+            "Complete", f"Download of all {dataset_type}s is completed."
+        )
+
+    def process_dataset_number(self, base_command, dataset_type, number):
+        """Process a Project, Dataset or Image ID for downloading.
+
+        This method formats the base command with the dataset number, updates the progress label,
+        and executes the command to download the dataset. It handles errors and updates the progress
+        label accordingly.
+
+        Parameters
+        ----------
+        base_command : str
+            The base command to execute for downloading.
+        dataset_type : str
+            The type of dataset being processed (e.g., Project, Dataset, Image).
+        number : str
+            The specific dataset number to download.
+        """
         command = base_command.format(number)
-        
-        # Update the progress label in the GUI
-        progress_label.config(text=f"Processing {dataset_type}: {number}")
-        
+        self.update_progress_label(f"Processing {dataset_type}: {number}")
+
         try:
-            # Start the command in a separate thread
-            current_process = subprocess.Popen(command, shell=True)
-            current_process.wait()  # Wait for the process to complete
+            self.current_process = subprocess.Popen(command, shell=True)
+            self.current_process.wait()
         except subprocess.CalledProcessError as e:
-            messagebox.showerror("Error", f"Failed to download: {number}\n{e}")
+            self.show_error(f"Failed to download: {number}\n{e}")
         except Exception as e:
-            messagebox.showerror("Error", str(e))
+            self.show_error(str(e))
         finally:
-            current_process = None
-            progress_label.config(text="")  # Clear the progress label after completion
+            self.current_process = None
+            self.update_progress_label("")
 
-    messagebox.showinfo("Complete", f"Download of all {dataset_type}s is completed.")
+    def update_progress_label(self, text):
+        """Update the progress label with the given text.
+
+        Parameters
+        ----------
+        text : str
+            The text to display in the progress label.
+        """
+        self.progress_label.config(text=text)
+
+    def show_error(self, message):
+        """Display an error message in a message box.
+
+        Parameters
+        ----------
+        message : str
+            The error message to display.
+        """
+        messagebox.showerror("Error", message)
+
+    def cancel_script(self):
+        """Cancel the current download process.
+
+        This method terminates the current download process if it is running and updates
+        the progress label accordingly. It also shows a message box to inform the user
+        that the download has been cancelled.
+        """
+        if self.current_process:
+            self.current_process.terminate()
+            messagebox.showinfo("Cancelled", "The current download has been cancelled.")
+            self.current_process = None
+            self.update_progress_label("")
 
 
-def cancel_script():
-    global current_process
-    if current_process:
-        current_process.terminate()
-        messagebox.showinfo("Cancelled", "The current download has been cancelled.")
-        current_process = None
-        progress_label.config(text="")  # Clear the progress label on cancel
-
-
-# Create the main GUI window
-root = tk.Tk()
-root.title("OMERO Downloader")
-
-label_type = tk.Label(root, text="Select type: Project(s), Dataset(s) or Image(s)")
-label_type.pack(pady=10)
-
-dataset_type_combobox = ttk.Combobox(root, values=["Project", "Dataset", "Image"])
-dataset_type_combobox.set("Dataset")
-dataset_type_combobox.pack(pady=10)
-
-label_numbers = tk.Label(root, text="Enter IDs (comma-separated):")
-label_numbers.pack(pady=10)
-
-entry = tk.Entry(root, width=50)
-entry.pack(pady=10)
-
-label_path = tk.Label(root, text="Enter storage path:")
-label_path.pack(pady=10)
-
-path_entry = tk.Entry(root, width=50)
-path_entry.pack(pady=10)
-path_entry.insert(0, "D:\\Data")
-
-label_server = tk.Label(root, text="Enter server address:")
-label_server.pack(pady=10)
-
-server_entry = tk.Entry(root, width=50)
-server_entry.pack(pady=10)
-server_entry.insert(0, "omero.biozentrum.unibas.ch")
-
-label_username = tk.Label(root, text="Enter username:")
-label_username.pack(pady=10)
-
-username_entry = tk.Entry(root, width=50)
-username_entry.pack(pady=10)
-
-label_password = tk.Label(root, text="Enter password:")
-label_password.pack(pady=10)
-
-password_entry = tk.Entry(root, width=50, show="*")  # Use show="*" to hide the password
-password_entry.pack(pady=10)
-
-progress_label = tk.Label(root, text="", fg="blue")
-progress_label.pack(pady=10)
-
-run_button = tk.Button(root, text="Download all", command=lambda: threading.Thread(target=run_script).start())
-run_button.pack(pady=20)
-
-cancel_button = tk.Button(root, text="Cancel current download", command=cancel_script)
-cancel_button.pack(pady=10)
-
-# Start the GUI event loop
-root.mainloop()
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = OmeroDownloaderApp(root)
+    root.mainloop()
