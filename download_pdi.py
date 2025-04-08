@@ -20,7 +20,17 @@ python download_pdi.py Project:123 my_project_directory hostname username passwo
 
 
 def download_datasets(conn, datasets, target_dir):
+    """Download all datasets and their images to the specified directory.
 
+    Parameters
+    ----------
+    conn : BlitzGateway
+        The connection to the OMERO server.
+    datasets : list
+        A list of datasets to download.
+    target_dir : str
+        The target directory for downloads.
+    """
     for dataset in datasets:
         print(f"Downloading Dataset {dataset.id}: {dataset.name}")
         dc = DownloadControl()
@@ -64,15 +74,18 @@ def download_image_fileset(conn, image, target_dir):
 
 
 def download_object(conn, args):
+    """Download the specified object (Project, Dataset, or Image).
 
+    Parameters
+    ----------
+    conn : BlitzGateway
+        The connection to the OMERO server.
+    args : Namespace
+        The command line arguments containing the object and target directory.
+    """
     conn.SERVICE_OPTS.setOmeroGroup(-1)
 
     obj_type, obj_id = parse_object_id(args.obj)
-    try:
-        obj_id = int(obj.split(":")[1])
-        obj_type = obj.split(":")[0]
-    except:
-        print(OBJ_INFO)
     parent = conn.getObject(obj_type, obj_id)
 
     if parent is None:
@@ -124,9 +137,16 @@ def parse_object_id(obj):
 
 
 def main(argv):
+    """Main entry point for the script.
+
+    Parameters
+    ----------
+    argv : list
+        The command line arguments.
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "obj", help="Download object: 'Project:ID' , 'Dataset:ID' or 'Image:ID'"
+        "obj", help="Download object: 'Project:ID', 'Dataset:ID' or 'Image:ID'"
     )
     parser.add_argument("target", help="Directory name to download into")
     parser.add_argument("hostname", help="OMERO server address")
