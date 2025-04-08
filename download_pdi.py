@@ -22,7 +22,7 @@ python download_pdi.py Project:123 my_project_directory hostname username passwo
 def download_datasets(conn, datasets, target_dir):
 
     for dataset in datasets:
-        print("Downloading Dataset", dataset.id, dataset.name)
+        print(f"Downloading Dataset {dataset.id}: {dataset.name}")
         dc = DownloadControl()
         dataset_dir = os.path.join(target_dir, dataset.name)
         os.makedirs(dataset_dir, exist_ok=True)
@@ -92,6 +92,7 @@ def download_object(conn, args):
         return
     else:
         print(OBJ_INFO)
+    print(f"Downloading to {target_dir}")
 
     print("Downloading to ", target_dir)
 
