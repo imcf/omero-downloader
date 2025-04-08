@@ -28,7 +28,7 @@ def download_datasets(conn, datasets, target_dir):
         os.makedirs(dataset_dir, exist_ok=True)
 
         for image in dataset.listChildren():
-            if image.getFileset() is None:
+            download_image_fileset(conn, image, dataset_dir)
                 print("No files to download for Image", image.id)
                 continue
             # image_dir = os.path.join(dataset_dir, image.name)
