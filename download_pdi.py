@@ -145,6 +145,7 @@ def main(argv):
 
     if conn.connect():
         print("Connected to OMERO server")
+        download_object(conn, args)
     else:
         print("Failed to connect to OMERO server")
 
