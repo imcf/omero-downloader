@@ -33,23 +33,11 @@ def download_datasets(conn, datasets, target_dir):
     """
     for dataset in datasets:
         print(f"Downloading Dataset {dataset.id}: {dataset.name}")
-        dc = DownloadControl()
         dataset_dir = os.path.join(target_dir, dataset.name)
         os.makedirs(dataset_dir, exist_ok=True)
 
         for image in dataset.listChildren():
             download_image_fileset(conn, image, dataset_dir)
-                print("No files to download for Image", image.id)
-                continue
-            # image_dir = os.path.join(dataset_dir, image.name)
-            # If each image is a single file, or are guaranteed not to clash
-            # then we don't need image_dir. Can use dataset_dir instead
-
-            fileset = image.getFileset()
-            if fileset is None:
-                print("Image has no Fileset")
-                continue
-            dc.download_fileset(conn, fileset, dataset_dir)
 
 
 def download_image_fileset(conn, image, target_dir):
@@ -156,11 +144,6 @@ def main(argv):
 
     client = omero.client(args.hostname, 4064)  # Default OMERO port
     session = client.createSession(args.username, args.password)
-    password = args.password
-    port = 4064  # Default OMERO port
-
-    client = omero.client(hostname, port)
-    session = client.createSession(username, password)
     conn = BlitzGateway(client_obj=client)
 
     if conn.connect():
@@ -168,8 +151,6 @@ def main(argv):
         download_object(conn, args)
     else:
         print("Failed to connect to OMERO server")
-
-    download_object(conn, args)
 
     conn.close()
     print("Connection closed")
