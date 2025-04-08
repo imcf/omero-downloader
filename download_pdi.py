@@ -1,5 +1,4 @@
 import argparse, os, sys
-from omero.cli import cli_login, CLI
 import omero.clients
 from omero.gateway import BlitzGateway
 from omero.plugins.download import DownloadControl
