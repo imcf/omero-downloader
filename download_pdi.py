@@ -79,11 +79,29 @@ def download_object(conn, args):
 
     print("Downloading to ", target_dir)
 
-    if obj_type == "Image":
-        download_image(conn, parent, target_dir)
+def parse_object_id(obj):
+    """Parse the object ID and type from the given string.
 
-    if obj_type == "Dataset" or obj_type == "Project":
-        download_datasets(conn, datasets, target_dir)
+    Parameters
+    ----------
+    obj : str
+        The object string in the format 'Type:ID'.
+
+    Returns
+    -------
+    tuple
+        A tuple containing the object type and ID.
+
+    Raises
+    ------
+    ValueError
+        If the object string is not in the correct format.
+    """
+    try:
+        obj_type, obj_id = obj.split(":")
+        return obj_type, int(obj_id)
+    except ValueError:
+        raise ValueError(OBJ_INFO)
 
 
 def main(argv):
