@@ -86,6 +86,9 @@ def download_object(conn, args):
     elif obj_type == "Project":
         datasets = list(parent.listChildren())
         target_dir = os.path.join(target_dir, parent.getName())
+    elif obj_type == "Image":
+        download_image_fileset(conn, parent, target_dir)
+        return
     else:
         print(OBJ_INFO)
 
