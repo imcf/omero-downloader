@@ -13,10 +13,13 @@ OBJ_INFO = "obj should be 'Project:ID', 'Dataset:ID' or 'Image:ID'"
 """
 Usage:
 python download_pdi.py Project:123 my_project_directory hostname username password
+
+Notes:
+this script originated from Will Moore:
+https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
 """
 
-# this script originated from Will Moore:
-# https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
+OBJ_INFO = "obj should be 'Project:ID', 'Dataset:ID' or 'Image:ID'"
 
 
 def download_datasets(conn, datasets, target_dir):
