@@ -42,12 +42,24 @@ def download_datasets(conn, datasets, target_dir):
             dc.download_fileset(conn, fileset, dataset_dir)
 
 
-def download_image(conn, image, target_dir):
-    dc = DownloadControl()
+def download_image_fileset(conn, image, target_dir):
+    """Download the fileset of a single image.
 
+    Parameters
+    ----------
+    conn : BlitzGateway
+        The connection to the OMERO server.
+    image : Image
+        The image object to download.
+    target_dir : str
+        The target directory for the image download.
+    """
     fileset = image.getFileset()
-    if image.getFileset() is None:
-        print("No files to download for Image", image.id)
+    if fileset is None:
+        print(f"No files to download for Image {image.id}")
+        return
+
+    dc = DownloadControl()
     dc.download_fileset(conn, fileset, target_dir)
 
 
