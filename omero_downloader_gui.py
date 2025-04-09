@@ -27,7 +27,7 @@ class OmeroDownloaderApp:
     def create_widgets(self):
         """Create and layout the GUI widgets."""
 
-        self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
+        self.create_label("Select data type: Project(s), Dataset(s) or Image(s)")
         self.data_type_combobox = self.create_combobox(
             ["Project", "Dataset", "Image"], "Dataset"
         )
