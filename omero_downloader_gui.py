@@ -5,7 +5,7 @@ import threading
 
 
 class OmeroDownloaderApp:
-    """A GUI application for downloading datasets from OMERO."""
+    """A GUI application for downloading data from OMERO."""
 
     def __init__(self, root):
         """
@@ -28,10 +28,10 @@ class OmeroDownloaderApp:
         """Create and layout the GUI widgets."""
 
         self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
-        self.dataset_type_combobox = self.create_combobox(
+        self.data_type_combobox = self.create_combobox(
             ["Project", "Dataset", "Image"], "Dataset"
         )
-        self.create_label("Enter IDs (comma-separated):")
+        self.create_label("Download queue: Enter IDs (comma-separated)")
         self.entry = self.create_entry(width=50)
 
         self.create_label("Enter storage path:")
@@ -122,60 +122,61 @@ class OmeroDownloaderApp:
         button.pack(pady=20)
 
     def start_download_thread(self):
-        """Start the download process in a separate thread."""
-        self.close_after_download = False  # Reset the flags
+        """Start the download process in a separate thread.
+
+        Also resets all flags.
+        """
+        self.close_after_download = False
         self.skip_queue = False
         threading.Thread(target=self.run_script).start()
 
     def run_script(self):
-        """Run the download script for the specified datasets."""
+        """Run the download script for the specified data."""
 
-        dataset_type = self.dataset_type_combobox.get()
-        dataset_numbers = self.entry.get().split(",")
+        data_type = self.data_type_combobox.get()
+        data_id = self.entry.get().split(",")
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         server_address = self.server_entry.get().strip()
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
 
-        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
+        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {data_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
 
-        for number in map(str.strip, dataset_numbers):
+        for id in map(str.strip, data_id):
             if self.close_after_download:
                 self.root.destroy()
             if self.skip_queue:
-                print(f"skipping ID {number}")
+                print(f"skipping ID {id}")
                 continue
             else:
-                self.process_dataset_number(base_command, dataset_type, number)
+                self.process_id(base_command, data_type, id)
 
-        messagebox.showinfo(
-            "Complete", f"Download of all {dataset_type}s is completed."
-        )
+        messagebox.showinfo("Complete", f"Download of all {data_type}s is completed.")
 
-    def process_dataset_number(self, base_command, dataset_type, number):
+    def process_id(self, base_command, data_type, id):
         """Process a Project, Dataset or Image ID for downloading.
 
-        This method formats the base command with the dataset number, updates the progress label,
-        and executes the command to download the dataset. It handles errors and updates the progress
+        This method formats the base command with the data id, updates the progress label,
+        and executes the command to download the data. It handles errors and updates the progress
         label accordingly.
 
         Parameters
         ----------
         base_command : str
             The base command to execute for downloading.
-        dataset_type : str
-            The type of dataset being processed (e.g., Project, Dataset, Image).
-        number : str
-            The specific dataset number to download.
+        data_type : str
+            The type of data being processed (e.g., Project, Dataset, Image).
+        id : str
+            The specific data id to download.
         """
-        command = base_command.format(number)
-        self.update_progress_label(f"Processing {dataset_type}: {number}")
+        command = base_command.format(id)
+        self.update_progress_label(f"Processing {data_type}: {id}")
 
         try:
             self.current_process = subprocess.Popen(command, shell=True)
             self.current_process.wait()
         except subprocess.CalledProcessError as e:
-            self.show_error(f"Failed to download: {number}\n{e}")
+            self.show_error(f"Failed to download: {id}\n{e}")
         except Exception as e:
             self.show_error(str(e))
         finally:
@@ -234,9 +235,10 @@ class OmeroDownloaderApp:
             )
 
     def browse_dir(self):
+        """Browse for a directory and set it to the path entry"""
         path = filedialog.askdirectory()
         if path:
-            self.path_entry.delete(0, tk.END)  # Clear the entry widget
+            self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, path)
 
 
