@@ -207,12 +207,12 @@ class OmeroDownloaderApp:
         after the current download is finished.
         """
         if self.current_process:
+            self.close_after_download = True
             messagebox.showinfo(
                 "Download in Progress",
-                "Please wait for the current download to finish."
+                "Please wait for the current download to finish.\n"
                 "The App will then close automatically.",
             )
-            self.close_after_download = True
         else:
             self.root.destroy()
 
