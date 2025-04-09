@@ -5,7 +5,7 @@ import threading
 
 
 class OmeroDownloaderApp:
-    """A GUI application for downloading datasets from OMERO."""
+    """A GUI application for downloading data from OMERO."""
 
     def __init__(self, root):
         """
@@ -122,8 +122,11 @@ class OmeroDownloaderApp:
         button.pack(pady=20)
 
     def start_download_thread(self):
-        """Start the download process in a separate thread."""
-        self.close_after_download = False  # Reset the flags
+        """Start the download process in a separate thread.
+
+        Also resets all flags.
+        """
+        self.close_after_download = False
         self.skip_queue = False
         threading.Thread(target=self.run_script).start()
 
@@ -234,9 +237,10 @@ class OmeroDownloaderApp:
             )
 
     def browse_dir(self):
+        """Browse for a directory and set it to the path entry"""
         path = filedialog.askdirectory()
         if path:
-            self.path_entry.delete(0, tk.END)  # Clear the entry widget
+            self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, path)
 
 
