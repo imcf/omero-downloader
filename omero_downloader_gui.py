@@ -1,6 +1,6 @@
 import subprocess
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox, ttk, filedialog
 import threading
 
 
@@ -33,8 +33,11 @@ class OmeroDownloaderApp:
         )
         self.create_label("Enter IDs (comma-separated):")
         self.entry = self.create_entry(width=50)
+
         self.create_label("Enter storage path:")
+        self.create_button("Browse", self.browse_dir)
         self.path_entry = self.create_entry(width=50, default_value="D:\\Data")
+
         self.create_label("Enter server address:")
         self.server_entry = self.create_entry(
             width=50, default_value="omero.biozentrum.unibas.ch"
@@ -229,6 +232,12 @@ class OmeroDownloaderApp:
                 "Please wait for the current download to finish.\n"
                 "All other downloads will be skipped.",
             )
+
+    def browse_dir(self):
+        path = filedialog.askdirectory()
+        if path:
+            self.path_entry.delete(0, tk.END)  # Clear the entry widget
+            self.path_entry.insert(0, path)
 
 
 if __name__ == "__main__":
