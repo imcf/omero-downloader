@@ -21,6 +21,7 @@ class OmeroDownloaderApp:
         self.current_process = None
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.close_after_download = False
+        self.skip_queue = False
         self.create_widgets()
 
     def create_widgets(self):
@@ -47,6 +48,7 @@ class OmeroDownloaderApp:
         self.progress_label.pack(pady=10)
 
         self.create_button("Download all Images", self.start_download_thread)
+        self.create_button("Skip queued downloads", self.skip_queued_downloads)
 
     def create_label(self, text):
         """Create a label widget.
@@ -118,7 +120,8 @@ class OmeroDownloaderApp:
 
     def start_download_thread(self):
         """Start the download process in a separate thread."""
-        self.close_after_download = False  # Reset the flag
+        self.close_after_download = False  # Reset the flags
+        self.skip_queue = False
         threading.Thread(target=self.run_script).start()
 
     def run_script(self):
@@ -136,8 +139,11 @@ class OmeroDownloaderApp:
         for number in map(str.strip, dataset_numbers):
             if self.close_after_download:
                 self.root.destroy()
-
-            self.process_dataset_number(base_command, dataset_type, number)
+            if self.skip_queue:
+                print(f"skipping ID {number}")
+                continue
+            else:
+                self.process_dataset_number(base_command, dataset_type, number)
 
         messagebox.showinfo(
             "Complete", f"Download of all {dataset_type}s is completed."
@@ -201,14 +207,28 @@ class OmeroDownloaderApp:
         after the current download is finished.
         """
         if self.current_process:
+            self.close_after_download = True
             messagebox.showinfo(
                 "Download in Progress",
-                "Please wait for the current download to finish."
+                "Please wait for the current download to finish.\n"
                 "The App will then close automatically.",
             )
-            self.close_after_download = True
         else:
             self.root.destroy()
+
+    def skip_queued_downloads(self):
+        """Skip all queued downloads.
+
+        The download of all file(s) associated to the currently
+        processed ID will finish.
+        """
+        if self.current_process:
+            self.skip_queue = True
+            messagebox.showinfo(
+                "Download in Progress",
+                "Please wait for the current download to finish.\n"
+                "All other downloads will be skipped.",
+            )
 
 
 if __name__ == "__main__":
