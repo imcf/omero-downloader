@@ -151,9 +151,7 @@ class OmeroDownloaderApp:
             else:
                 self.process_dataset_number(base_command, dataset_type, number)
 
-        messagebox.showinfo(
-            "Complete", f"Download of all {dataset_type}s is completed."
-        )
+        messagebox.showinfo("Complete", f"Download of all {data_type}s is completed.")
 
     def process_dataset_number(self, base_command, dataset_type, number):
         """Process a Project, Dataset or Image ID for downloading.
