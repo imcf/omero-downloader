@@ -19,7 +19,8 @@ class OmeroDownloaderApp:
         self.root = root
         self.root.title("OMERO Downloader")
         self.current_process = None
-
+        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.close_after_download = False
         self.create_widgets()
 
     def create_widgets(self):
@@ -46,7 +47,6 @@ class OmeroDownloaderApp:
         self.progress_label.pack(pady=10)
 
         self.create_button("Download all Images", self.start_download_thread)
-        self.create_button("Cancel current download", self.cancel_script)
 
     def create_label(self, text):
         """Create a label widget.
@@ -118,7 +118,7 @@ class OmeroDownloaderApp:
 
     def start_download_thread(self):
         """Start the download process in a separate thread."""
-
+        self.close_after_download = False  # Reset the flag
         threading.Thread(target=self.run_script).start()
 
     def run_script(self):
@@ -134,6 +134,9 @@ class OmeroDownloaderApp:
         base_command = f'python C:/Tools/omero-downloader/download_pdi.py {dataset_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
 
         for number in map(str.strip, dataset_numbers):
+            if self.close_after_download:
+                self.root.destroy()
+
             self.process_dataset_number(base_command, dataset_type, number)
 
         messagebox.showinfo(
@@ -190,18 +193,22 @@ class OmeroDownloaderApp:
         """
         messagebox.showerror("Error", message)
 
-    def cancel_script(self):
-        """Cancel the current download process.
+    def on_closing(self):
+        """Handle the event when the window is closed.
 
-        This method terminates the current download process if it is running and updates
-        the progress label accordingly. It also shows a message box to inform the user
-        that the download has been cancelled.
+        This method is called when the user attempts to close the GUI.
+        It sets a flag to indicate that the user wants to close the application
+        after the current download is finished.
         """
         if self.current_process:
-            self.current_process.terminate()
-            messagebox.showinfo("Cancelled", "The current download has been cancelled.")
-            self.current_process = None
-            self.update_progress_label("")
+            messagebox.showinfo(
+                "Download in Progress",
+                "Please wait for the current download to finish."
+                "The App will then close automatically.",
+            )
+            self.close_after_download = True
+        else:
+            self.root.destroy()
 
 
 if __name__ == "__main__":
