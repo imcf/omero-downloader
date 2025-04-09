@@ -28,10 +28,10 @@ class OmeroDownloaderApp:
         """Create and layout the GUI widgets."""
 
         self.create_label("Select type: Project(s), Dataset(s) or Image(s)")
-        self.dataset_type_combobox = self.create_combobox(
+        self.data_type_combobox = self.create_combobox(
             ["Project", "Dataset", "Image"], "Dataset"
         )
-        self.create_label("Enter IDs (comma-separated):")
+        self.create_label("Download queue: Enter IDs (comma-separated)")
         self.entry = self.create_entry(width=50)
 
         self.create_label("Enter storage path:")
