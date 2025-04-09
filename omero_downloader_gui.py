@@ -2,6 +2,7 @@ import subprocess
 import tkinter as tk
 from tkinter import messagebox, ttk, filedialog
 import threading
+import os
 
 
 class OmeroDownloaderApp:
@@ -44,6 +45,8 @@ class OmeroDownloaderApp:
         )
         self.create_label("Enter username:")
         self.username_entry = self.create_entry(width=50)
+        self.populate_username()
+
         self.create_label("Enter password:")
         self.password_entry = self.create_entry(width=50, show="*")
 
@@ -240,6 +243,10 @@ class OmeroDownloaderApp:
         if path:
             self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, path)
+
+    def populate_username(self):
+        username = os.getlogin()
+        self.username_entry.insert(0, username)
 
 
 if __name__ == "__main__":
