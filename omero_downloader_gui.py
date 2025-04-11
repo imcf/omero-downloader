@@ -54,7 +54,7 @@ class OmeroDownloaderApp:
         self.progress_label.pack(pady=10)
 
         self.create_button("Download all Images", self.start_download_thread)
-        self.create_button("Skip queued downloads", self.skip_queued_downloads)
+        self.create_button("Skip remaining queue", self.skip_queued_downloads)
 
     def create_label(self, text):
         """Create a label widget.
