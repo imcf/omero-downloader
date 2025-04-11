@@ -1,6 +1,7 @@
 import subprocess
 import tkinter as tk
-from tkinter import messagebox, ttk, filedialog
+from tkinter import messagebox, filedialog
+import ttkbootstrap as ttk
 import threading
 import os
 
@@ -250,6 +251,6 @@ class OmeroDownloaderApp:
 
 
 if __name__ == "__main__":
-    root = tk.Tk()
+    root = ttk.Window(themename="superhero")
     app = OmeroDownloaderApp(root)
     root.mainloop()
