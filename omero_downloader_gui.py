@@ -4,6 +4,7 @@ from tkinter import messagebox, filedialog
 import ttkbootstrap as ttk
 import threading
 import os
+from utils import extract_datatype_and_ids
 
 
 class OmeroDownloaderApp:
@@ -34,7 +35,7 @@ class OmeroDownloaderApp:
             ["Project", "Dataset", "Image"], "Dataset", width=8
         )
         self.create_label("Download queue: Enter IDs (comma-separated)")
-        self.entry = self.create_entry(width=50)
+        self.queue_entry = self.create_entry(width=50)
 
         self.create_label("Enter storage path:")
         self.create_button("Browse", self.browse_dir)
@@ -141,10 +142,14 @@ class OmeroDownloaderApp:
     def run_script(self):
         """Run the download script for the specified data."""
 
-        data_type = self.data_type_combobox.get()
-        data_id = self.entry.get().split(",")
-        storage_path = self.path_entry.get().strip().replace("\\", "/")
         server_address = self.server_entry_combobox.get()
+        if str(server_address) in self.queue_entry.get():
+            data_type, data_id = extract_datatype_and_ids(self.queue_entry.get())
+        else:
+            data_type = self.data_type_combobox.get()
+            data_id = self.queue_entry.get().split(",")
+
+        storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
 
