@@ -23,7 +23,15 @@ def extract_datatype_and_ids(url):
     -----
     The function assumes that the prefixes 'project-', 'dataset-', and 'image-'
     are mutually exclusive within the URL.
+
+    Example
+    ------
+    url = "https://omero.biozentrum.unibas.ch/webclient/?show=project-2305|dataset-5678"
+    data_type, data_ids = extract_datatype_and_ids(url)
+    print(data_type)  # Output: Project
+    print(data_ids)   # Output: [2305, 5678]
     """
+
     prefix_to_type = {"project-": "Project", "dataset-": "Dataset", "image-": "Image"}
 
     # Find two groups, the prefix and associated ID
@@ -37,6 +45,6 @@ def extract_datatype_and_ids(url):
         print("No matches found in URL")
 
     # Extract IDs from the matches
-    data_ids = [int(number) for _, number in matches]
+    data_ids = [number for _, number in matches]
 
     return data_type, data_ids
