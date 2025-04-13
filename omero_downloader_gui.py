@@ -41,9 +41,10 @@ class OmeroDownloaderApp:
         self.path_entry = self.create_entry(width=50, default_value="D:\\Data")
 
         self.create_label("Enter server address:")
-        self.server_entry = self.create_entry(
-            width=50, default_value="omero.biozentrum.unibas.ch"
+        self.server_entry_combobox = self.create_combobox(
+            ["omero.biozentrum.unibas.ch", "nccr-omero.biozentrum.unibas.ch"], "omero.biozentrum.unibas.ch", width=28
         )
+
         self.create_label("Enter username:")
         self.username_entry = self.create_entry(width=50)
         self.populate_username()
@@ -140,7 +141,7 @@ class OmeroDownloaderApp:
         data_type = self.data_type_combobox.get()
         data_id = self.entry.get().split(",")
         storage_path = self.path_entry.get().strip().replace("\\", "/")
-        server_address = self.server_entry.get().strip()
+        server_address = self.server_entry_combobox.get()
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
 
