@@ -253,6 +253,6 @@ class OmeroDownloaderApp:
 
 
 if __name__ == "__main__":
-    root = ttk.Window(themename="superhero")
+    root = ttk.Window(themename="yeti") # superhero
     app = OmeroDownloaderApp(root)
     root.mainloop()
