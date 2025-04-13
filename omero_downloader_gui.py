@@ -42,7 +42,9 @@ class OmeroDownloaderApp:
 
         self.create_label("Enter server address:")
         self.server_entry_combobox = self.create_combobox(
-            ["omero.biozentrum.unibas.ch", "nccr-omero.biozentrum.unibas.ch"], "omero.biozentrum.unibas.ch", width=28
+            ["omero.biozentrum.unibas.ch", "nccr-omero.biozentrum.unibas.ch"],
+            "omero.biozentrum.unibas.ch",
+            width=28,
         )
 
         self.create_label("Enter username:")
@@ -253,6 +255,6 @@ class OmeroDownloaderApp:
 
 
 if __name__ == "__main__":
-    root = ttk.Window(themename="yeti") # superhero
+    root = ttk.Window(themename="yeti")  # superhero
     app = OmeroDownloaderApp(root)
     root.mainloop()
