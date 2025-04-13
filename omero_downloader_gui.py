@@ -31,7 +31,7 @@ class OmeroDownloaderApp:
 
         self.create_label("Select data type: Project(s), Dataset(s) or Image(s)")
         self.data_type_combobox = self.create_combobox(
-            ["Project", "Dataset", "Image"], "Dataset"
+            ["Project", "Dataset", "Image"], "Dataset", width=8
         )
         self.create_label("Download queue: Enter IDs (comma-separated)")
         self.entry = self.create_entry(width=50)
@@ -92,7 +92,7 @@ class OmeroDownloaderApp:
             entry.insert(0, default_value)
         return entry
 
-    def create_combobox(self, values, default_value):
+    def create_combobox(self, values, default_value, width):
         """Create a combobox widget.
         The combobox widget combines a text field with a pop-down list of values.
 
@@ -110,6 +110,7 @@ class OmeroDownloaderApp:
         """
         combobox = ttk.Combobox(self.root, values=values)
         combobox.set(default_value)
+        combobox.configure(width=width)
         combobox.pack(pady=10)
         return combobox
 
