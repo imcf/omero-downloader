@@ -148,27 +148,28 @@ class OmeroDownloaderApp:
         else:
             data_type = self.data_type_combobox.get()
             data_id = self.queue_entry.get().split(",")
+            data_id = [id.strip() for id in data_id]
 
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
 
-        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {data_type}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
+        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {{}}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
 
-        for id in map(str.strip, data_id):
+        for index, id in enumerate(data_id):
             if self.close_after_download:
                 self.root.destroy()
             if self.skip_queue:
                 print(f"skipping ID {id}")
                 continue
-            else:
+            if isinstance(data_type, str):
                 self.process_id(base_command, data_type, id)
             if isinstance(data_type, list):
                 self.process_id(base_command, data_type[index], id)
             else:
                 print("Unexpected Data type format")
 
-        messagebox.showinfo("Complete", f"Download of all {data_type}s is completed.")
+        messagebox.showinfo("Complete", "Download of all data is completed.")
 
     def process_id(self, base_command, data_type, id):
         """Process a Project, Dataset or Image ID for downloading.
