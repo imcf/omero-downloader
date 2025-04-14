@@ -30,12 +30,16 @@ class OmeroDownloaderApp:
     def create_widgets(self):
         """Create and layout the GUI widgets."""
 
-        self.create_label("Select data type: Project(s), Dataset(s) or Image(s)")
+        self.create_label("Download queue:  \n " "Enter URL or comma-separated IDs")
+        self.queue_entry = self.create_entry(width=50)
+
+        self.create_label(
+            "For comma-Seperated IDs: \n "
+            "Select data type: Project(s), Dataset(s) or Image(s)"
+        )
         self.data_type_combobox = self.create_combobox(
             ["Project", "Dataset", "Image"], "Dataset", width=8
         )
-        self.create_label("Download queue: Enter IDs (comma-separated)")
-        self.queue_entry = self.create_entry(width=50)
 
         self.create_label("Enter storage path:")
         self.create_button("Browse", self.browse_dir)
@@ -167,7 +171,7 @@ class OmeroDownloaderApp:
             if isinstance(data_type, list):
                 self.process_id(base_command, data_type[index], id)
             else:
-                print("Unexpected Data type format")
+                print(f"Unexpected Data type format {type(data_type)}")
 
         messagebox.showinfo("Complete", "Download of all data is completed.")
 
