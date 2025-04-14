@@ -163,6 +163,10 @@ class OmeroDownloaderApp:
                 continue
             else:
                 self.process_id(base_command, data_type, id)
+            if isinstance(data_type, list):
+                self.process_id(base_command, data_type[index], id)
+            else:
+                print("Unexpected Data type format")
 
         messagebox.showinfo("Complete", f"Download of all {data_type}s is completed.")
 
@@ -182,7 +186,7 @@ class OmeroDownloaderApp:
         id : str
             The specific data id to download.
         """
-        command = base_command.format(id)
+        command = base_command.format(data_type, id)
         self.update_progress_label(f"Processing {data_type}: {id}")
 
         try:
