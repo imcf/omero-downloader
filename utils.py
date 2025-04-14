@@ -34,17 +34,15 @@ def extract_datatype_and_ids(url):
 
     prefix_to_type = {"project-": "Project", "dataset-": "Dataset", "image-": "Image"}
 
-    # Find two groups, the prefix and associated ID
+    # Find two groups: matches of the prefix and associated ID
     matches = re.findall(r"(project-|dataset-|image-)(\d+)", url)
 
-    data_type = None
-    if matches:
-        # Since prefixes are mutually exclusive, we can take it from the first match
-        data_type = prefix_to_type[matches[0][0]]
-    else:
+    if not matches:
         print("No matches found in URL")
+        return [], []
 
-    # Extract IDs from the matches
-    data_ids = [number for _, number in matches]
+    # Extract data types and IDs from the matches
+    data_types = [prefix_to_type[prefix] for prefix, _ in matches]
+    data_ids = [id for _, id in matches]
 
-    return data_type, data_ids
+    return data_types, data_ids
