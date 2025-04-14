@@ -47,7 +47,7 @@ class OmeroDownloaderApp:
 
         self.create_label("Enter server address:")
         self.server_entry_combobox = self.create_combobox(
-            ["omero.biozentrum.unibas.ch", "nccr-omero.biozentrum.unibas.ch"],
+            ["omero.biozentrum.unibas.ch", "omero-nccr.biozentrum.unibas.ch"],
             "omero.biozentrum.unibas.ch",
             width=28,
         )
