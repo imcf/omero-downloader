@@ -40,4 +40,8 @@ def extract_datatype_and_ids(url):
     data_types = [prefix_to_type[prefix] for prefix, _ in matches]
     data_ids = [id for _, id in matches]
 
-    return data_types, data_ids
+    if len(data_types) == len(data_ids):
+        return data_types, data_ids
+    else:
+        print("Number of data types and IDs don't match")
+        return [], []
