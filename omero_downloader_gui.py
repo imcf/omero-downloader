@@ -5,6 +5,7 @@ import ttkbootstrap as ttk
 import threading
 import os
 from utils import extract_datatype_and_ids
+from pathlib import Path
 
 
 class OmeroDownloaderApp:
@@ -30,7 +31,7 @@ class OmeroDownloaderApp:
     def create_widgets(self):
         """Create and layout the GUI widgets."""
 
-        self.create_label("Download queue:  \n " "Enter URL or comma-separated IDs")
+        self.create_label("Download queue:  \n Enter URL or comma-separated IDs")
         self.queue_entry = self.create_entry(width=50)
 
         self.create_label(
@@ -157,8 +158,12 @@ class OmeroDownloaderApp:
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
+        localdir = Path(__file__).resolve().parent
 
-        base_command = f'python C:/Tools/omero-downloader/download_pdi.py {{}}:{{}} "{storage_path}" "{server_address}" "{username}" "{password}"'
+        base_command = (
+            f"python {localdir}/download_pdi.py {{}}:{{}} "
+            f'"{storage_path}" "{server_address}" "{username}" "{password}"'
+        )
 
         for index, id in enumerate(data_id):
             if self.close_after_download:
