@@ -35,5 +35,5 @@ dependencies:
       - requests==2.32.3
       - ttkbootstrap==1.12.0
       - urllib3==1.26.20
-      - zeroc-ice==3.6.5
+      - zeroc-ice @ https://github.com/glencoesoftware/zeroc-ice-py-win-x86_64/releases/download/20240325/zeroc_ice-3.6.5-cp311-cp311-win_amd64.whl
 prefix: S:\anaconda_envs\omero-py_env
