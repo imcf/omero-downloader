@@ -1,7 +1,3 @@
-import argparse, os, sys
-import omero.clients
-from omero.gateway import BlitzGateway
-from omero.plugins.download import DownloadControl
 
 """
 Usage:
@@ -11,6 +7,11 @@ Notes:
 this script originated from Will Moore:
 https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
 """
+
+import argparse, os, sys
+import omero.clients
+from omero.gateway import BlitzGateway
+from omero.plugins.download import DownloadControl
 
 OBJ_INFO = "obj should be 'Project:ID', 'Dataset:ID' or 'Image:ID'"
 
@@ -121,7 +122,7 @@ def parse_object_id(obj):
 
 
 def main(argv):
-    """Main entry point for the script.
+    """Parse arguments and perform download tasks.
 
     Parameters
     ----------
