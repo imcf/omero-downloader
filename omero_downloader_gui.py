@@ -12,8 +12,7 @@ class OmeroDownloaderApp:
     """A GUI application for downloading data from OMERO."""
 
     def __init__(self, root):
-        """
-        Initialize the OmeroDownloaderApp.
+        """Initialize the OmeroDownloaderApp.
 
         Parameters
         ----------
@@ -102,6 +101,7 @@ class OmeroDownloaderApp:
 
     def create_combobox(self, values, default_value, width):
         """Create a combobox widget.
+
         The combobox widget combines a text field with a pop-down list of values.
 
         Parameters

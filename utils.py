@@ -2,8 +2,7 @@ import re
 
 
 def extract_datatype_and_ids(url):
-    """
-    Extract the data type and associated IDs from the given URL string.
+    """Extract the data type and associated IDs from the given URL string.
 
     Parameters
     ----------
