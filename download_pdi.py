@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
-"""
-Usage:
-python download_pdi.py Project:123 my_project_directory hostname username password
+"""Download a project / dataset / image from OMERO.
 
-Notes:
+Example
+-------
+download_pdi.py Project:123 my_project_directory hostname username password
+
+Notes
+-----
 this script originated from Will Moore:
 https://gist.github.com/will-moore/a9f90c97b5b6f1a0da277a5179d62c5a
 """
