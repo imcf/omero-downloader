@@ -50,16 +50,21 @@ def download_image_fileset(conn, image, target_dir):
     dc.download_fileset(conn, fileset, target_dir)
 
 
-def download_object(args):
+def download_object(obj, destination, server, username, password):
     """Download the specified object (Project, Dataset, or Image).
 
     Parameters
     ----------
-    args : Namespace
-        The command line arguments containing the object and target directory.
+    obj : str
+    destination : Path
+    server : str
+    username : str
+    password : str
     """
-    client = omero.client(args.hostname, 4064)  # Default OMERO port
-    session = client.createSession(args.username, args.password)
+    # print(f"{obj} - {destination} - {server} - {username}")
+
+    client = omero.client(server, 4064)
+    session = client.createSession(username, password)
     with BlitzGateway(client_obj=client) as conn:
         if not conn.connect():
             print("Failed to connect to OMERO server")
@@ -69,14 +74,14 @@ def download_object(args):
 
         conn.SERVICE_OPTS.setOmeroGroup(-1)
 
-        obj_type, obj_id = parse_object_id(args.obj)
+        obj_type, obj_id = parse_object_id(obj)
         parent = conn.getObject(obj_type, obj_id)
 
         if parent is None:
-            print(f"Not Found: {args.obj}")
+            print(f"Not Found: {obj}")
             return
 
-        target_dir = args.target
+        target_dir = destination
         datasets = []
 
         if obj_type == "Dataset":

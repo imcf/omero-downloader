@@ -1,7 +1,6 @@
 """Command line entry points."""
 
-import argparse
-import sys
+import click
 import ttkbootstrap as ttk
 
 from .download import download_object
@@ -15,16 +14,18 @@ def launch_gui():
     root_window.mainloop()
 
 
-def download_pdi():
-    """Parse arguments and perform download tasks."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "obj", help="Download object: 'Project:ID', 'Dataset:ID' or 'Image:ID'"
-    )
-    parser.add_argument("target", help="Directory name to download into")
-    parser.add_argument("hostname", help="OMERO server address")
-    parser.add_argument("username", help="OMERO user name")
-    parser.add_argument("password", help="OMERO password")
-    args = parser.parse_args(sys.argv)
-
-    download_object(args)
+@click.command(help="Download a project/dataset/image from OMERO.")
+@click.option(
+    "--obj", type=str, help="Download object: 'Project:ID', 'Dataset:ID' or 'Image:ID'"
+)
+@click.option(
+    "--destination",
+    type=click.Path(exists=False),
+    help="Path to store downloaded files.",
+)
+@click.option("--server", type=str, help="OMERO server address.")
+@click.option("--username", type=str, help="OMERO user name.")
+@click.option("--password", type=str, help="OMERO password.")
+def download_pdi(obj, destination, server, username, password):
+    """Parse arguments and start download tasks."""
+    download_object(obj, destination, server, username, password)

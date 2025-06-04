@@ -165,10 +165,15 @@ class OmeroDownloaderApp:
         password = self.password_entry.get().strip()
         local_dir = Path(__file__).resolve().parent
 
-        base_command = (
-            f"download-pdi {{}}:{{}} "
-            f'"{storage_path}" "{server_address}" "{username}" "{password}"'
-        )
+        components = [
+            "download-pdi",
+            '--obj "{}:{}"',
+            f'--destination "{storage_path}"',
+            f'--server "{server_address}"',
+            f'--username "{username}"',
+            f'--password "{password}"',
+        ]
+        base_command = " ".join(components)
 
         for index, obj_id in enumerate(data_id):
             if self.close_after_download:
