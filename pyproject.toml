@@ -1,8 +1,5 @@
-[tool.ruff.lint]
-# exclude = [
-#   "tests/foo/*"
-# ]
 
+[tool.ruff.lint]
 select = [
     "D",
     "D212", # summary lines must be on the first physical line of the docstring
