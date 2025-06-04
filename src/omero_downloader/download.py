@@ -84,6 +84,8 @@ def download_object(obj, destination, server, username, password):
         target_dir = destination
         datasets = []
 
+        print(f"Processing [{obj}]")
+
         if obj_type == "Dataset":
             datasets.append(parent)
         elif obj_type == "Project":
