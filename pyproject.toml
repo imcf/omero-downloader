@@ -40,8 +40,12 @@ convention = "numpy"
 
 
 [tool.pixi.workspace]
-channels = ["conda-forge"]
+channels = [
+    "https://prefix.dev/pixi-build-backends",
+    "https://prefix.dev/conda-forge",
+]
 platforms = ["linux-64", "win-64"]
+preview = ["pixi-build"]
 
 [tool.pixi.pypi-dependencies]
 omero_downloader = { path = ".", editable = true }
@@ -52,3 +56,14 @@ omero_downloader = { path = ".", editable = true }
 zeroc-ice = "==3.6.5"
 omero-py = ">=5.20.0,<6"
 click = ">=8.2.1,<9"
+
+[tool.pixi.package]
+name = "omero-downloader"
+version = "0.1.0"
+
+[tool.pixi.package.build]
+backend = { name = "pixi-build-python", version = "0.1.*" }
+
+[tool.pixi.package.host-dependencies]
+hatchling = "==1.26.3"
+python = "3.11.*"
