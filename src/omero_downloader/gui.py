@@ -181,9 +181,10 @@ class OmeroDownloaderApp:
             if self.skip_queue:
                 print(f"skipping ID {obj_id}")
                 continue
+
             if isinstance(data_type, str):
                 self.process_id(base_command, data_type, obj_id)
-            if isinstance(data_type, list):
+            elif isinstance(data_type, list):
                 self.process_id(base_command, data_type[index], obj_id)
             else:
                 print(f"Unexpected Data type format {type(data_type)}")
