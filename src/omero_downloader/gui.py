@@ -189,7 +189,7 @@ class OmeroDownloaderApp:
             else:
                 print(f"Unexpected Data type format {type(data_type)}")
 
-        messagebox.showinfo("Complete", "Download of all data is completed.")
+        messagebox.showinfo("Finished", "Please check console for results.")
 
     def process_id(self, base_command, data_type, obj_id):
         """Process a Project, Dataset or Image ID for downloading.
