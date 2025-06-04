@@ -56,10 +56,18 @@ def download_object(obj, destination, server, username, password):
     Parameters
     ----------
     obj : str
+        A string identifying the object to retrieve from OMERO, consisting of
+        a prefix (the object type, one of `Project`, `Dataset` or `Image`),
+        followed by a colon (`:`), followed by the OMERO-ID of the object.
+        Valid examples are `Image:1234`, `Project:007`, `Dataset:42`.
     destination : Path
+        The path to a directory where the downloaded files should be stored.
     server : str
+        The address of the OMERO server to connect to.
     username : str
+        The OMERO user name.
     password : str
+        The OMERO password corresponding to the user name.
     """
     # print(f"{obj} - {destination} - {server} - {username}")
 
