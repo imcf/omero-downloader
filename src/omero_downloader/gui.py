@@ -1,11 +1,14 @@
+"""Main GUI application."""
+
 import subprocess
 import tkinter as tk
 from tkinter import messagebox, filedialog
 import ttkbootstrap as ttk
 import threading
 import os
-from utils import extract_datatype_and_ids
 from pathlib import Path
+
+from .utils import extract_datatype_and_ids
 
 
 class OmeroDownloaderApp:
@@ -110,6 +113,8 @@ class OmeroDownloaderApp:
             The list of values for the combobox.
         default_value : str
             The default value to set in the combobox.
+        width: int
+            The width value, passed directly to the combobox widget.
 
         Returns
         -------
@@ -158,10 +163,10 @@ class OmeroDownloaderApp:
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
-        localdir = Path(__file__).resolve().parent
+        local_dir = Path(__file__).resolve().parent
 
         base_command = (
-            f"python {localdir}/download_pdi.py {{}}:{{}} "
+            f"download-pdi {{}}:{{}} "
             f'"{storage_path}" "{server_address}" "{username}" "{password}"'
         )
 
@@ -262,18 +267,13 @@ class OmeroDownloaderApp:
             )
 
     def browse_dir(self):
-        """Browse for a directory and set it to the path entry"""
+        """Browse for a directory and set it to the path entry."""
         path = filedialog.askdirectory()
         if path:
             self.path_entry.delete(0, tk.END)
             self.path_entry.insert(0, path)
 
     def populate_username(self):
+        """Pre-populate the username field from the logged in user."""
         username = os.getlogin()
         self.username_entry.insert(0, username)
-
-
-if __name__ == "__main__":
-    root = ttk.Window(themename="yeti")  # superhero
-    app = OmeroDownloaderApp(root)
-    root.mainloop()
