@@ -158,7 +158,7 @@ class OmeroDownloaderApp:
         else:
             data_type = self.data_type_combobox.get()
             data_id = self.queue_entry.get().split(",")
-            data_id = [id.strip() for id in data_id]
+            data_id = [obj_id.strip() for obj_id in data_id]
 
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
@@ -170,22 +170,22 @@ class OmeroDownloaderApp:
             f'"{storage_path}" "{server_address}" "{username}" "{password}"'
         )
 
-        for index, id in enumerate(data_id):
+        for index, obj_id in enumerate(data_id):
             if self.close_after_download:
                 self.root.destroy()
             if self.skip_queue:
-                print(f"skipping ID {id}")
+                print(f"skipping ID {obj_id}")
                 continue
             if isinstance(data_type, str):
-                self.process_id(base_command, data_type, id)
+                self.process_id(base_command, data_type, obj_id)
             if isinstance(data_type, list):
-                self.process_id(base_command, data_type[index], id)
+                self.process_id(base_command, data_type[index], obj_id)
             else:
                 print(f"Unexpected Data type format {type(data_type)}")
 
         messagebox.showinfo("Complete", "Download of all data is completed.")
 
-    def process_id(self, base_command, data_type, id):
+    def process_id(self, base_command, data_type, obj_id):
         """Process a Project, Dataset or Image ID for downloading.
 
         This method formats the base command with the data id, updates the progress label,
@@ -198,17 +198,17 @@ class OmeroDownloaderApp:
             The base command to execute for downloading.
         data_type : str
             The type of data being processed (e.g., Project, Dataset, Image).
-        id : str
+        obj_id : str
             The specific data id to download.
         """
-        command = base_command.format(data_type, id)
-        self.update_progress_label(f"Processing {data_type}: {id}")
+        command = base_command.format(data_type, obj_id)
+        self.update_progress_label(f"Processing {data_type}: {obj_id}")
 
         try:
             self.current_process = subprocess.Popen(command, shell=True)
             self.current_process.wait()
         except subprocess.CalledProcessError as e:
-            self.show_error(f"Failed to download: {id}\n{e}")
+            self.show_error(f"Failed to download: {obj_id}\n{e}")
         except Exception as e:
             self.show_error(str(e))
         finally:
