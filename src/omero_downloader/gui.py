@@ -6,6 +6,7 @@ from tkinter import messagebox, filedialog
 import ttkbootstrap as ttk
 import threading
 import os
+import sys
 from pathlib import Path
 
 from .utils import extract_datatype_and_ids
@@ -28,7 +29,40 @@ class OmeroDownloaderApp:
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.close_after_download = False
         self.skip_queue = False
+        self._dl_script = None
         self.create_widgets()
+
+    @property
+    def dl_script(self):
+        """Locate the `download-pdi` script / executable.
+
+        Returns
+        -------
+        pathlib.Path
+            The full path to the `download-pdi` script located in the same
+            environment as the GUI application.
+
+        Raises
+        ------
+        FileNotFoundError
+            Raised in case the `download-pdi` script can't be found.
+        """
+        if self._dl_script:
+            return self._dl_script
+
+        # NOTE: `sys.exec_prefix` will point to the virtual environment that was
+        # used to run this script, see the standard library docs for details:
+        # https://docs.python.org/3/library/sys.html#sys.exec_prefix
+        dl_script = Path(sys.exec_prefix) / "bin" / "download-pdi"
+        if sys.platform == "win32":
+            dl_script = Path(sys.exec_prefix) / "Scripts" / "download-pdi.exe"
+
+        if not dl_script.exists:
+            raise FileNotFoundError(f"Cannot find downloader tool at {dl_script}")
+
+        self._dl_script = dl_script
+        # print(f"Using downloader tool at: {dl_script}")
+        return self._dl_script
 
     def create_widgets(self):
         """Create and layout the GUI widgets."""
@@ -166,7 +200,7 @@ class OmeroDownloaderApp:
         local_dir = Path(__file__).resolve().parent
 
         components = [
-            "download-pdi",
+            f"{self.dl_script}",
             '--obj "{}:{}"',
             f'--destination "{storage_path}"',
             f'--server "{server_address}"',
