@@ -37,7 +37,7 @@ class OmeroDownloaderApp:
         self.queue_entry = self.create_entry(width=50)
 
         self.create_label(
-            "For comma-Seperated IDs: \n "
+            "For comma-separated IDs: \n "
             "Select data type: Project(s), Dataset(s) or Image(s)"
         )
         self.data_type_combobox = self.create_combobox(
