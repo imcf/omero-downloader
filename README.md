@@ -1,33 +1,35 @@
-# Installation instructions
+# A simple OMERO downloader GUI: `omero-downloader`
 
-## create an environment using an Anaconda PowerShell Prompt
+## Installation instructions
 
-```bash
-# The -y flag will install packages without asking for confirmation
-conda create --prefix S:\anaconda_envs\omero-py_env python=3.11 -y
-conda activate S:\anaconda_envs\omero-py_env
-```
+The easiest way to install the tool is through [pixi], although a classical
+Python `venv` setup is possible as well. In the latter case make sure to use the
+ZeroC-Ice wheels provided by Glencoe ([Windows][ice-win], [Linux][ice-linux])
+in order to avoid the time-consuming compilation step.
 
-## install ZeroC IcePy 3.6 matching the Python version of the environment
+Here, we're describing the setup using `pixi`:
 
-Using the corresponding wheels provided by [Glencoe Software][1].
+1. First, you'll obviously need `pixi` itself. In case you don't have it yet,
+   we're recommending to download the appropriate [standalone binary][pixi-bin]
+   from GitHub as this won't involve any persistent changes to your system.
+1. Next, clone this repository.
+1. Then, simply run `pixi install` inside the repo.
 
-```bash
-pip install https://github.com/glencoesoftware/zeroc-ice-py-win-x86_64/releases/download/20240325/zeroc_ice-3.6.5-cp311-cp311-win_amd64.whl
-```
-
-## install omero-py
-
-TODO: Figure out if a certain version is required.
-
-```bash
-pip install omero-py==5.19.4
-```
-
-## install ttkbootstrap for a prettier GUI
+From there on, you may use `pixi` to launch the `omero-downloader-gui` tool, but
+that's not a requirement. Calling it directly will also work, and is much
+simpler:
 
 ```bash
-python -m pip install ttkbootstrap
+# on 🐧 Linux:
+$PATH_TO_REPO/.pixi/envs/default/bin/omero-downloader-gui
 ```
 
-[1]: https://www.glencoesoftware.com/blog/2023/12/08/ice-binaries-for-omero.html
+```Powershell
+# on 🟦 Windows:
+$PATH_TO_REPO\.pixi\envs\default\Scripts\omero-downloader-gui
+```
+
+[pixi]: https://pixi.sh/
+[pixi-bin]: https://github.com/prefix-dev/pixi/releases
+[ice-linux]: https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases
+[ice-win]: https://github.com/glencoesoftware/zeroc-ice-py-win-x86_64/releases
