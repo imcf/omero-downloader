@@ -9,6 +9,7 @@ from .gui import OmeroDownloaderApp
 
 def launch_gui():
     """Launch the GUI applications."""
+    print("Launching OMERO Downloader GUI, might take a few moments ...")
     root_window = ttk.Window(themename="yeti")  # superhero
     app = OmeroDownloaderApp(root_window)
     root_window.mainloop()
@@ -28,4 +29,6 @@ def launch_gui():
 @click.option("--password", type=str, help="OMERO password.")
 def download_pdi(obj, destination, server, username, password):
     """Parse arguments and start download tasks."""
+    print(f"Requesting {obj}")
+    print(f"Selected target destination: [{destination}]")
     download_object(obj, destination, server, username, password)

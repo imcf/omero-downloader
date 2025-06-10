@@ -243,6 +243,7 @@ class OmeroDownloaderApp:
         """
         command = base_command.format(data_type, obj_id)
         self.update_progress_label(f"Processing {data_type}: {obj_id}")
+        print(f"Starting download for {data_type}:{obj_id}")
 
         try:
             self.current_process = subprocess.Popen(command, shell=True)
