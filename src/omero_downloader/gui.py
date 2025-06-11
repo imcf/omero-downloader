@@ -197,7 +197,6 @@ class OmeroDownloaderApp:
         storage_path = self.path_entry.get().strip().replace("\\", "/")
         username = self.username_entry.get().strip()
         password = self.password_entry.get().strip()
-        local_dir = Path(__file__).resolve().parent
 
         components = [
             f"{self.dl_script}",
