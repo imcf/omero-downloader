@@ -1,6 +1,7 @@
 """Utility functions."""
 
 import re
+import os
 
 
 def extract_datatype_and_ids(url):
@@ -46,3 +47,24 @@ def extract_datatype_and_ids(url):
     else:
         print("Number of data types and IDs don't match")
         return [], []
+def get_config_path():
+    """Retrieve the file path of 'config.json'.
+
+    Returns
+    -------
+    str
+        Absolute normalized path to the 'config.json' file.
+
+    Raises
+    ------
+    FileNotFoundError
+        If the 'config.json' file does not exist in the expected location.
+    """
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    print(script_dir)
+    config_path = os.path.join(script_dir, "..", "..", "config.json")
+    config_path = os.path.normpath(config_path)
+    if not os.path.exists(config_path):
+        raise FileNotFoundError(f"Config file not found at {config_path}")
+
+    return config_path
