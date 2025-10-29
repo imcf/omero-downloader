@@ -1,6 +1,7 @@
 """Utility functions."""
 
 import re
+import json
 import os
 
 
@@ -47,6 +48,32 @@ def extract_datatype_and_ids(url):
     else:
         print("Number of data types and IDs don't match")
         return [], []
+
+
+def load_all_db_entries():
+    """Extract all database addresses from the configuration file.
+
+    Parameters
+    ----------
+    config_path : str
+        Path to the JSON configuration file.
+
+    Returns
+    -------
+    list
+        list of all database addresses
+    """
+
+    config_path = get_config_path()
+
+    with open(config_path, "r") as config_file:
+        config = json.load(config_file)
+
+    addresses = [database["address"] for database in config["databases"].values()]
+
+    return addresses
+
+
 def get_config_path():
     """Retrieve the file path of 'config.json'.
 
