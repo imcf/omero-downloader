@@ -10,6 +10,7 @@ import sys
 from pathlib import Path
 
 from .utils import extract_datatype_and_ids
+from .utils import load_all_db_entries
 
 
 class OmeroDownloaderApp:
@@ -84,8 +85,8 @@ class OmeroDownloaderApp:
 
         self.create_label("Enter server address:")
         self.server_entry_combobox = self.create_combobox(
-            ["omero.biozentrum.unibas.ch", "omero-nccr.biozentrum.unibas.ch"],
-            "omero.biozentrum.unibas.ch",
+            values=load_all_db_entries(),
+            default_value=load_all_db_entries()[0],
             width=28,
         )
 

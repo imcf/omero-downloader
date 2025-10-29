@@ -24,7 +24,7 @@ def extract_datatype_and_ids(url):
 
     Example
     ------
-        url = "https://omero.biozentrum.unibas.ch/webclient/?show=project-2305|project-5678"
+        url = "https://idr.openmicroscopy.org/webclient/?show=project-2305|project-5678"
         data_types, data_ids = extract_datatype_and_ids(url)
         print(data_types)  # Output: ['Project', 'Project']
         print(data_ids)    # Output: [2305, 5678]
