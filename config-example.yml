@@ -1,0 +1,7 @@
+# rename this file to `config.yml` in order to use it!
+---
+databases:
+  Local:
+    address: localhost
+  IDR:
+    address: idr.openmicroscopy.org

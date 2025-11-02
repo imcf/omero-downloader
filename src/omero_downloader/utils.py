@@ -1,7 +1,7 @@
 """Utility functions."""
 
 import re
-import json
+import yaml
 from pathlib import Path
 
 
@@ -64,7 +64,7 @@ def load_all_db_entries(config_path):
         list of all database addresses
     """
     with open(config_path, "r") as config_file:
-        config = json.load(config_file)
+        config = yaml.safe_load(config_file)
 
     addresses = [database["address"] for database in config["databases"].values()]
 
@@ -111,7 +111,7 @@ def get_config_path():
     # print(f"Running from 'editable' installation: {editable}")
     up = 2 if editable else 7
     config_dir = mod_dir.parents[up]
-    config_path = config_dir / "config.json"
+    config_path = config_dir / "config.yml"
     if not config_path.exists():
         raise FileNotFoundError(f"Unable to find config file at: {config_path}")
     print(f"Using config file: {config_path}")

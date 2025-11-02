@@ -1,6 +1,10 @@
 __pycache__/
 # pixi environments
 .pixi
+
+# local configuration file
+/config.yml
+
 *.egg-info
 
 *.code-workspace
