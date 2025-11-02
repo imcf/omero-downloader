@@ -50,7 +50,7 @@ def extract_datatype_and_ids(url):
         return [], []
 
 
-def load_all_db_entries():
+def load_all_db_entries(config_path):
     """Extract all database addresses from the configuration file.
 
     Parameters
@@ -63,9 +63,6 @@ def load_all_db_entries():
     list
         list of all database addresses
     """
-
-    config_path = get_config_path()
-
     with open(config_path, "r") as config_file:
         config = json.load(config_file)
 

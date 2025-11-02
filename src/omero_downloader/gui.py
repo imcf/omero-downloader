@@ -9,8 +9,7 @@ import os
 import sys
 from pathlib import Path
 
-from .utils import extract_datatype_and_ids
-from .utils import load_all_db_entries
+from .utils import extract_datatype_and_ids, load_all_db_entries, get_config_path
 
 
 class OmeroDownloaderApp:
@@ -24,6 +23,8 @@ class OmeroDownloaderApp:
         root : tk.Tk
             The root window for the Tkinter application.
         """
+        self.config_path = get_config_path()
+        self.server_list = load_all_db_entries(self.config_path)
         self.root = root
         self.root.title("OMERO Downloader")
         self.current_process = None
@@ -85,8 +86,8 @@ class OmeroDownloaderApp:
 
         self.create_label("Enter server address:")
         self.server_entry_combobox = self.create_combobox(
-            values=load_all_db_entries(),
-            default_value=load_all_db_entries()[0],
+            values=self.server_list,
+            default_value=self.server_list[0],
             width=28,
         )
 
