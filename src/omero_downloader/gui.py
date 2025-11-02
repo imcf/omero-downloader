@@ -115,7 +115,7 @@ class OmeroDownloaderApp:
         label = tk.Label(self.root, text=text)
         label.pack(pady=10)
 
-    def create_entry(self, width, default_value=None, show=None):
+    def create_entry(self, width, default_value=None, show=""):
         """Create an entry widget.
 
         Parameters
@@ -125,7 +125,7 @@ class OmeroDownloaderApp:
         default_value : str, optional
             The default value to insert into the entry (default is None).
         show : str, optional
-            The character to display for password entry (default is None).
+            The character to display for password entry (default is "").
 
         Returns
         -------
