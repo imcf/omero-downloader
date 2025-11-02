@@ -31,6 +31,11 @@ $PATH_TO_REPO/.pixi/envs/default/bin/omero-downloader-gui
 $PATH_TO_REPO\.pixi\envs\default\Scripts\omero-downloader-gui
 ```
 
+### Desktop Shortcut
+
+TODO: explain how to create a Desktop shortcut / Start Menu entry pointing to
+the pixi env and using the provided icon.
+
 [pixi]: https://pixi.sh/
 [pixi-bin]: https://github.com/prefix-dev/pixi/releases
 [ice-linux]: https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases
