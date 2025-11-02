@@ -13,6 +13,8 @@ Here, we're describing the setup using `pixi`:
    we're recommending to download the appropriate [standalone binary][pixi-bin]
    from GitHub as this won't involve any persistent changes to your system.
 1. Next, clone this repository.
+1. Copy the example configuration file `config-example.yml` to `config.yml` and
+   adjust the contents to fit your needs.
 1. Then, simply run `pixi install` inside the repo.
 
 From there on, you may use `pixi` to launch the `omero-downloader-gui` tool, but
