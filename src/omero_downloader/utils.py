@@ -2,7 +2,7 @@
 
 import re
 import json
-import os
+from pathlib import Path
 
 
 def extract_datatype_and_ids(url):
@@ -75,23 +75,48 @@ def load_all_db_entries():
 
 
 def get_config_path():
-    """Retrieve the file path of 'config.json'.
+    """Locate the configuration file path of 'config.json'.
+
+    Check if the current environment is using this package through an "editable"
+    installation or a regular one and identify the "base" path where the config
+    file is expected to be found.
 
     Returns
     -------
-    str
-        Absolute normalized path to the 'config.json' file.
+    pathlib.Path
+        Path to the 'config.json' file.
 
     Raises
     ------
     FileNotFoundError
         If the 'config.json' file does not exist in the expected location.
+
+    Example
+    -------
+
+    In an editable installation:
+
+    >>> print(__file__)
+    ... /opt/odl/src/omero_downloader/utils.py
+    >>> print(get_config_path())
+    ... /opt/odl/config.json
+
+
+    In a regular installation:
+
+    >>> print(__file__)
+    ... /opt/odl/.pixi/envs/def/lib/python3.11/site-packages/omero_downloader/utils.py
+    >>> print(get_config_path())
+    ... /opt/odl/config.json
     """
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    print(script_dir)
-    config_path = os.path.join(script_dir, "..", "..", "config.json")
-    config_path = os.path.normpath(config_path)
-    if not os.path.exists(config_path):
-        raise FileNotFoundError(f"Config file not found at {config_path}")
+    mod_dir = Path(__file__)
+    editable = True if mod_dir.parents[1].name == "src" else False
+    # print(f"Running from 'editable' installation: {editable}")
+    up = 2 if editable else 7
+    config_dir = mod_dir.parents[up]
+    config_path = config_dir / "config.json"
+    if not config_path.exists():
+        raise FileNotFoundError(f"Unable to find config file at: {config_path}")
+    print(f"Using config file: {config_path}")
 
     return config_path
