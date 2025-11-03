@@ -72,7 +72,7 @@ def load_all_db_entries(config_path):
 
 
 def get_config_path():
-    """Locate the configuration file path of 'config.json'.
+    """Locate the configuration file path of 'config.yml'.
 
     Check if the current environment is using this package through an "editable"
     installation or a regular one and identify the "base" path where the config
@@ -81,12 +81,12 @@ def get_config_path():
     Returns
     -------
     pathlib.Path
-        Path to the 'config.json' file.
+        Path to the 'config.yml' file.
 
     Raises
     ------
     FileNotFoundError
-        If the 'config.json' file does not exist in the expected location.
+        If the 'config.yml' file does not exist in the expected location.
 
     Example
     -------
@@ -96,7 +96,7 @@ def get_config_path():
     >>> print(__file__)
     ... /opt/odl/src/omero_downloader/utils.py
     >>> print(get_config_path())
-    ... /opt/odl/config.json
+    ... /opt/odl/config.yml
 
 
     In a regular installation:
@@ -104,7 +104,7 @@ def get_config_path():
     >>> print(__file__)
     ... /opt/odl/.pixi/envs/def/lib/python3.11/site-packages/omero_downloader/utils.py
     >>> print(get_config_path())
-    ... /opt/odl/config.json
+    ... /opt/odl/config.yml
     """
     mod_dir = Path(__file__)
     editable = True if mod_dir.parents[1].name == "src" else False
