@@ -47,10 +47,11 @@ channels = [
 platforms = ["linux-64", "win-64"]
 preview = ["pixi-build"]
 
-[tool.pixi.pypi-dependencies]
-omero_downloader = { path = ".", editable = true }
+# [tool.pixi.pypi-dependencies]
+# omero_downloader = { path = ".", editable = true }
 
 [tool.pixi.tasks]
+start = "omero_downloader.cli:launch_gui"
 
 [tool.pixi.dependencies]
 zeroc-ice = "==3.6.5"
