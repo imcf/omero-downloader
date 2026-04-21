@@ -6,6 +6,8 @@ environments:
     - url: https://prefix.dev/conda-forge/
     indexes:
     - https://pypi.org/simple
+    options:
+      pypi-prerelease-mode: if-necessary-or-explicit
     packages:
       linux-64:
       - conda: https://prefix.dev/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -91,7 +93,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-64/yaml-0.2.5-h7f98852_2.tar.bz2
       - conda: https://prefix.dev/conda-forge/linux-64/zeroc-ice-3.6.5-py311h5a3c2af_6.conda
       - conda: https://prefix.dev/conda-forge/linux-64/zstd-1.5.7-hb8e6e7a_2.conda
-      - pypi: https://files.pythonhosted.org/packages/da/62/c9c7c1897d59ddcea144e7c59636457d4b6e7a92f1faf1c29a96e08f2c2d/ttkbootstrap-1.12.1.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/ca/cf/812a67729004c68ae58621c5a75ea242cd016826d033bbbd66e6e051553b/ttkbootstrap-1.20.2-py3-none-any.whl
       - pypi: ./
       win-64:
       - conda: https://prefix.dev/conda-forge/win-64/_openmp_mutex-4.5-2_gnu.conda
@@ -177,7 +179,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/win-64/yaml-0.2.5-h8ffe710_2.tar.bz2
       - conda: https://prefix.dev/conda-forge/win-64/zeroc-ice-3.6.5-py311h70dce6f_6.conda
       - conda: https://prefix.dev/conda-forge/win-64/zstd-1.5.7-hbeecb71_2.conda
-      - pypi: https://files.pythonhosted.org/packages/da/62/c9c7c1897d59ddcea144e7c59636457d4b6e7a92f1faf1c29a96e08f2c2d/ttkbootstrap-1.12.1.tar.gz
+      - pypi: https://files.pythonhosted.org/packages/ca/cf/812a67729004c68ae58621c5a75ea242cd016826d033bbbd66e6e051553b/ttkbootstrap-1.20.2-py3-none-any.whl
       - pypi: ./
 packages:
 - conda: https://prefix.dev/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
@@ -1482,12 +1484,11 @@ packages:
   timestamp: 1707226459646
 - pypi: ./
   name: omero-downloader
-  version: 0.1.0
-  sha256: e037f6adf085f64bdcb268a37228962f55552ad07266c04a408fcc6eb425702f
+  version: 0.2.0
+  sha256: 832471beead967627c6c1d1519da76dae64d91f8545b9a1438a8c37f18b6580a
   requires_dist:
-  - ttkbootstrap==1.12.*
+  - ttkbootstrap==1.20.*
   requires_python: ==3.11.*
-  editable: true
 - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.20.0-pyhd8ed1ab_0.conda
   sha256: 5808c833570aa1afc5343b942a2dd39dce963153470b02936c39a67ae63b3750
   md5: c4f1d8ae21d4b1e55050907217043de5
@@ -1946,13 +1947,13 @@ packages:
   purls: []
   size: 3466348
   timestamp: 1748388121356
-- pypi: https://files.pythonhosted.org/packages/da/62/c9c7c1897d59ddcea144e7c59636457d4b6e7a92f1faf1c29a96e08f2c2d/ttkbootstrap-1.12.1.tar.gz
+- pypi: https://files.pythonhosted.org/packages/ca/cf/812a67729004c68ae58621c5a75ea242cd016826d033bbbd66e6e051553b/ttkbootstrap-1.20.2-py3-none-any.whl
   name: ttkbootstrap
-  version: 1.12.1
-  sha256: 7f599f8d52ba7f2ef48bd48359962de3682c7131b80b4e26bb9456f3c66dfee9
+  version: 1.20.2
+  sha256: 6b3f25aa173c09423474ac31eeb2d766cf0f9514c8debe24da8d1f062e4afdcf
   requires_dist:
-  - pillow>=9.5
-  requires_python: '>=3.7'
+  - pillow>=10,<13
+  requires_python: '>=3.10'
 - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025b-h78e105d_0.conda
   sha256: 5aaa366385d716557e365f0a4e9c3fca43ba196872abbbe3d56bb610d131e192
   md5: 4222072737ccff51314b5ece9c7d6f5a

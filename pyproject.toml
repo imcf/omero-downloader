@@ -8,7 +8,7 @@ name = "omero-downloader"
 requires-python = "== 3.11.*"
 version = "0.2.0"
 readme = "README.md"
-dependencies = ["ttkbootstrap==1.12.*"]
+dependencies = ["ttkbootstrap==1.20.*"]
 
 [project.scripts]
 omero-downloader-gui = "omero_downloader.cli:launch_gui"
