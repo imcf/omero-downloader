@@ -94,7 +94,6 @@ environments:
       - conda: https://prefix.dev/conda-forge/linux-64/zeroc-ice-3.6.5-py311h5a3c2af_6.conda
       - conda: https://prefix.dev/conda-forge/linux-64/zstd-1.5.7-hb8e6e7a_2.conda
       - pypi: https://files.pythonhosted.org/packages/ca/cf/812a67729004c68ae58621c5a75ea242cd016826d033bbbd66e6e051553b/ttkbootstrap-1.20.2-py3-none-any.whl
-      - pypi: ./
       win-64:
       - conda: https://prefix.dev/conda-forge/win-64/_openmp_mutex-4.5-2_gnu.conda
       - conda: https://prefix.dev/conda-forge/noarch/appdirs-1.4.4-pyhd8ed1ab_1.conda
@@ -180,7 +179,6 @@ environments:
       - conda: https://prefix.dev/conda-forge/win-64/zeroc-ice-3.6.5-py311h70dce6f_6.conda
       - conda: https://prefix.dev/conda-forge/win-64/zstd-1.5.7-hbeecb71_2.conda
       - pypi: https://files.pythonhosted.org/packages/ca/cf/812a67729004c68ae58621c5a75ea242cd016826d033bbbd66e6e051553b/ttkbootstrap-1.20.2-py3-none-any.whl
-      - pypi: ./
 packages:
 - conda: https://prefix.dev/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
   sha256: fe51de6107f9edc7aa4f786a70f4a883943bc9d39b3bb7307c04c41410990726
@@ -1482,13 +1480,6 @@ packages:
   - pkg:pypi/numpy?source=hash-mapping
   size: 7104093
   timestamp: 1707226459646
-- pypi: ./
-  name: omero-downloader
-  version: 0.2.0
-  sha256: 832471beead967627c6c1d1519da76dae64d91f8545b9a1438a8c37f18b6580a
-  requires_dist:
-  - ttkbootstrap==1.20.*
-  requires_python: ==3.11.*
 - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.20.0-pyhd8ed1ab_0.conda
   sha256: 5808c833570aa1afc5343b942a2dd39dce963153470b02936c39a67ae63b3750
   md5: c4f1d8ae21d4b1e55050907217043de5

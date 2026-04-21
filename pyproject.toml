@@ -5,10 +5,10 @@ authors = [
 ]
 description = "Simple GUI for downloading objects from an OMERO server."
 name = "omero-downloader"
-requires-python = "== 3.11.*"
+requires-python = ">=3.11,<3.12.0a0"
 version = "0.2.0"
 readme = "README.md"
-dependencies = ["ttkbootstrap==1.20.*"]
+dependencies = ["ttkbootstrap==1.20.2"]
 
 [project.scripts]
 omero-downloader-gui = "omero_downloader.cli:launch_gui"
@@ -63,8 +63,9 @@ name = "omero-downloader"
 version = "0.2.0"
 
 [tool.pixi.package.build]
-# backend = { name = "pixi-build-python", version = "0.1.*" }
-backend = { name = "pixi-build-rattler-build", version = "0.1.*" }
+# backend = { name = "pixi-build-python", version = "0.1.0dev20250107152721" }
+backend = { name = "pixi-build-python", version = "==0.4.8" }
+# backend = { name = "pixi-build-rattler-build", version = "0.1.*" }
 
 [tool.pixi.package.host-dependencies]
 hatchling = "==1.26.3"
