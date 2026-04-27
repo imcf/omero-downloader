@@ -86,7 +86,9 @@ def get_config_path():
     Raises
     ------
     FileNotFoundError
-        If the 'config.yml' file does not exist in the expected location.
+        If the 'config.yml' file does not exist in the expected location. The
+        contents of an example configuration will be printed in the exception
+        message in order to simplify bootstrapping the setup.
 
     Example
     -------
