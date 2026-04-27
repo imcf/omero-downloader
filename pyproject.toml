@@ -6,10 +6,10 @@ authors = [
 description = "Simple GUI for downloading objects from an OMERO server."
 name = "omero-downloader"
 requires-python = ">=3.11,<3.12.0a0"
-version = "0.2.1.a3"
+version = "0.2.1.a7"
 readme = "README.md"
 dependencies = [
-    "ttkbootstrap==1.20.2",
+    "ttkbootstrap>=1.20.2.a0",
     "zeroc-ice==3.6.5",
     "omero-py>=5.20.0,<6",
     "click>=8.2.1,<9",
@@ -48,12 +48,13 @@ convention = "numpy"
 channels = [
     "https://prefix.dev/pixi-build-backends",
     "https://prefix.dev/conda-forge",
+    "https://prefix.dev/imcf-test",
 ]
 platforms = ["linux-64", "win-64"]
 preview = ["pixi-build"]
 
-[tool.pixi.pypi-dependencies]
-ttkbootstrap = "==1.20.2"
+# [tool.pixi.pypi-dependencies]
+# ttkbootstrap = ">=1.20.2"
 # omero_downloader = { path = "." }
 
 # [tool.pixi.tasks]
@@ -64,6 +65,7 @@ ttkbootstrap = "==1.20.2"
 zeroc-ice = "==3.6.5"
 omero-py = ">=5.20.0,<6"
 click = ">=8.2.1,<9"
+ttkbootstrap = ">=1.20.2a0,<2"
 
 [tool.pixi.package]
 name = "omero-downloader"
@@ -80,7 +82,7 @@ uv = "*"
 python = "3.11.*"
 
 [tool.pixi.package.run-dependencies]
-ttkbootstrap = ">=1.20.2"
+ttkbootstrap = ">=1.20.2.a0"
 # zeroc-ice = "==3.6.5"
 # omero-py = ">=5.20.0,<6"
 # click = ">=8.2.1,<9"

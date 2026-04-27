@@ -4,6 +4,7 @@ environments:
     channels:
     - url: https://prefix.dev/pixi-build-backends/
     - url: https://prefix.dev/conda-forge/
+    - url: https://prefix.dev/imcf-test/
     indexes:
     - https://pypi.org/simple
     options:
@@ -85,6 +86,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/requests-2.32.3-pyhd8ed1ab_1.conda
       - conda: https://prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/tk-8.6.13-noxft_hd72426e_102.conda
+      - conda: https://prefix.dev/imcf-test/noarch/ttkbootstrap-1.20.2a0-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025b-h78e105d_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/unicodedata2-16.0.0-py311h9ecbd09_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/urllib3-1.26.19-pyhd8ed1ab_0.conda
@@ -165,6 +167,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/six-1.17.0-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/tbb-2021.13.0-h62715c5_1.conda
       - conda: https://prefix.dev/conda-forge/win-64/tk-8.6.13-h2c6b04d_2.conda
+      - conda: https://prefix.dev/imcf-test/noarch/ttkbootstrap-1.20.2a0-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025b-h78e105d_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/ucrt-10.0.22621.0-h57928b3_1.conda
       - conda: https://prefix.dev/conda-forge/win-64/unicodedata2-16.0.0-py311he736701_0.conda
@@ -1945,6 +1948,16 @@ packages:
   requires_dist:
   - pillow>=10,<13
   requires_python: '>=3.10'
+- conda: https://prefix.dev/imcf-test/noarch/ttkbootstrap-1.20.2a0-pyh4616a5c_0.conda
+  sha256: 0135f7809c161c939b3315d1e527fc7c6bf0442f85511c3ed8953a24aa30d06a
+  md5: b0addc175679986fd77f35702bfbdb30
+  depends:
+  - python >=3.10
+  - python *
+  - pillow >=10,<13
+  license: MIT AND (Apache-2.0 OR BSD-2-Clause)
+  size: 155065
+  timestamp: 1777323013807
 - conda: https://prefix.dev/conda-forge/noarch/tzdata-2025b-h78e105d_0.conda
   sha256: 5aaa366385d716557e365f0a4e9c3fca43ba196872abbbe3d56bb610d131e192
   md5: 4222072737ccff51314b5ece9c7d6f5a
