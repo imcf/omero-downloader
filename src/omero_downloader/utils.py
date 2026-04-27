@@ -112,8 +112,23 @@ def get_config_path():
     up = 2 if editable else 7
     config_dir = mod_dir.parents[up]
     config_path = config_dir / "config.yml"
+
     if not config_path.exists():
-        raise FileNotFoundError(f"Unable to find config file at: {config_path}")
+        example_conf = {
+            "databases": {
+                "Local": {"address": "localhost"},
+                "IDR": {"address": "idr.openmicroscopy.org"},
+            }
+        }
+        example_conf_yaml = yaml.dump(example_conf)
+        raise FileNotFoundError(
+            f"Unable to find config file at: {config_path}\n"
+            "\n"
+            "Example configuration file:\n"
+            "---\n"
+            f"{example_conf_yaml}"
+        )
+
     print(f"Using config file: {config_path}")
 
     return config_path
