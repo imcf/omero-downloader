@@ -71,12 +71,23 @@ def load_all_db_entries(config_path):
     return addresses
 
 
-def get_config_path():
-    """Locate the configuration file path of 'config.yml'.
+def get_config_path(config=""):
+    """Locate the configuration file path for the OMERO Downloader.
 
-    Check if the current environment is using this package through an "editable"
-    installation or a regular one and identify the "base" path where the config
-    file is expected to be found.
+    If the current environment is using this package through an "editable"
+    installation, a regular one (e.g. through `pixi install` or by using a
+    setup created by `pixi-pack`) and try to identify the "base" path where the
+    config file can be found.
+
+    In case the path to a configuration file is given explicitly, it is
+    converted into a `pathlib.Path` object and checked for existence.
+
+    Parameters
+    ----------
+    config : str, optional
+        The path to a configuration file, by default "" in which case the
+        application will attempt to automatically locate the file by checking at
+        pre-defined locations - see the *Example* section below for details.
 
     Returns
     -------
@@ -108,18 +119,21 @@ def get_config_path():
     >>> print(get_config_path())
     ... /opt/odl/config.yml
     """
-    mod_dir = Path(__file__)
-    editable = True if mod_dir.parents[1].name == "src" else False
-    # print(f"Running from 'editable' installation: {editable}")
-    up = 2 if editable else 7
-    config_dir = mod_dir.parents[up]
-    config_path = config_dir / "config.yml"
+    if config != "":
+        config_path = Path(config)
+    else:
+        mod_dir = Path(__file__)
+        editable = True if mod_dir.parents[1].name == "src" else False
+        # print(f"Running from 'editable' installation: {editable}")
+        up = 2 if editable else 7
+        config_dir = mod_dir.parents[up]
+        config_path = config_dir / "config.yml"
 
     if not config_path.exists():
         example_conf = {
             "databases": {
                 "Local": {"address": "localhost"},
-                "IDR": {"address": "idr.openmicroscopy.org"},
+                "Institute": {"address": "omero.institute.example"},
             }
         }
         example_conf_yaml = yaml.dump(example_conf)

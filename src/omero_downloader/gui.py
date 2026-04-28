@@ -15,15 +15,19 @@ from .utils import extract_datatype_and_ids, load_all_db_entries, get_config_pat
 class OmeroDownloaderApp:
     """A GUI application for downloading data from OMERO."""
 
-    def __init__(self, root):
+    def __init__(self, root, config=""):
         """Initialize the OmeroDownloaderApp.
 
         Parameters
         ----------
         root : tk.Tk
             The root window for the Tkinter application.
+        config : str, optional
+            The path to a configuration file, by default "" in which case the
+            application will attempt to automatically locate the file by
+            checking at pre-defined locations.
         """
-        self.config_path = get_config_path()
+        self.config_path = get_config_path(config)
         self.server_list = load_all_db_entries(self.config_path)
         self.root = root
         self.root.title("OMERO Downloader")

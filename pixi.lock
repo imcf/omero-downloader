@@ -1538,8 +1538,8 @@ packages:
   timestamp: 1773839131773
 - pypi: ./
   name: omero-downloader
-  version: 0.2.1a10
-  sha256: 9c303dd673b1b924cd0d7ab4b07db80dd11611fa51ab821873a53cf49f8764d8
+  version: 0.2.1a11
+  sha256: c6fd7a5b0bfffefe466578a53136d197113e5593c49ae17f43d9a807c26aa2a8
   requires_dist:
   - ttkbootstrap>=1.20.2a0
   - zeroc-ice==3.6.5

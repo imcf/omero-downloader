@@ -6,7 +6,7 @@ authors = [
 description = "Simple GUI for downloading objects from an OMERO server."
 name = "omero-downloader"
 requires-python = ">=3.11,<3.12.0a0"
-version = "0.2.1.a10"
+version = "0.2.1.a11"
 readme = "README.md"
 dependencies = [
     "ttkbootstrap>=1.20.2.a0",
@@ -65,7 +65,7 @@ ttkbootstrap = ">=1.20.2a0,<2"
 
 [tool.pixi.package]
 name = "omero-downloader"
-version = "0.2.1.a10"
+version = "0.2.1.a11"
 
 [tool.pixi.package.build]
 backend = { name = "pixi-build-python", version = "==0.4.8" }

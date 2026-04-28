@@ -7,11 +7,13 @@ from .download import download_object
 from .gui import OmeroDownloaderApp
 
 
-def launch_gui():
+@click.command(help="Simple OMERO Downloader GUI.")
+@click.option("--config", type=str, default="", help="Configuration file.")
+def launch_gui(config):
     """Launch the GUI applications."""
     print("Launching OMERO Downloader GUI, might take a few moments ...")
     root_window = ttk.Window(themename="yeti")  # superhero
-    app = OmeroDownloaderApp(root_window)
+    app = OmeroDownloaderApp(root_window, config)
     root_window.mainloop()
 
 
