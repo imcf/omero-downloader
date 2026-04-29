@@ -5,5 +5,12 @@
         "pixi",
         "themename",
         "ttkbootstrap"
+    ],
+    "python-envs.pythonProjects": [
+        {
+            "path": ".",
+            "envManager": "renan-r-santos.pixi-code:pixi",
+            "packageManager": "renan-r-santos.pixi-code:pixi"
+        }
     ]
 }
