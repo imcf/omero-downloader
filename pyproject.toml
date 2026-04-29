@@ -3,21 +3,21 @@ authors = [
     { name = "Kai Schleicher", email = "kai.schleicher@unibas.ch" },
     { name = "Niko Ehrenfeuchter", email = "nikolaus.ehrenfeuchter@unibas.ch" },
 ]
+dependencies = [
+  "ttkbootstrap>=1.20.2.a0",
+  "zeroc-ice==3.6.5",
+  "omero-py>=5.20.0,<6",
+  "click>=8.2.1,<9",
+]
 description = "Simple GUI for downloading objects from an OMERO server."
 name = "omero-downloader"
+readme = "README.md"
 requires-python = ">=3.11,<3.12.0a0"
 version = "0.2.1.a11"
-readme = "README.md"
-dependencies = [
-    "ttkbootstrap>=1.20.2.a0",
-    "zeroc-ice==3.6.5",
-    "omero-py>=5.20.0,<6",
-    "click>=8.2.1,<9",
-]
 
 [project.scripts]
-omero-downloader-gui = "omero_downloader.cli:launch_gui"
 download-pdi = "omero_downloader.cli:download_pdi"
+omero-downloader-gui = "omero_downloader.cli:launch_gui"
 
 
 [build-system]
@@ -62,11 +62,11 @@ dev = ["dev"]
 omero_downloader = { path = ".", editable = true }
 
 [tool.pixi.dependencies]
-zeroc-ice = "==3.6.5"
-omero-py = ">=5.20.0,<6"
 click = ">=8.2.1,<9"
-ttkbootstrap = ">=1.20.2a0,<2"
 omero-downloader = ">=0.2.1.a11,<0.3"
+omero-py = ">=5.20.0,<6"
+ttkbootstrap = ">=1.20.2a0,<2"
+zeroc-ice = "==3.6.5"
 
 [tool.pixi.package]
 name = "omero-downloader"
@@ -80,8 +80,8 @@ ignore-pypi-mapping = false
 
 [tool.pixi.package.host-dependencies]
 hatchling = "==1.26.3"
-uv = "*"
 python = "3.11.*"
+uv = "*"
 
 [tool.pixi.package.run-dependencies]
 ttkbootstrap = ">=1.20.2.a0"
