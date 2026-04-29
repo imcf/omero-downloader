@@ -53,7 +53,11 @@ channels = [
 platforms = ["linux-64", "win-64"]
 preview = ["pixi-build"]
 
-[tool.pixi.pypi-dependencies]
+[tool.pixi.environments]
+default = ["default"]
+dev = ["dev"]
+
+[tool.pixi.feature.dev.pypi-dependencies]
 # ttkbootstrap = ">=1.20.2"
 omero_downloader = { path = ".", editable = true }
 
@@ -62,6 +66,7 @@ zeroc-ice = "==3.6.5"
 omero-py = ">=5.20.0,<6"
 click = ">=8.2.1,<9"
 ttkbootstrap = ">=1.20.2a0,<2"
+omero-downloader = ">=0.2.1.a11,<0.3"
 
 [tool.pixi.package]
 name = "omero-downloader"
