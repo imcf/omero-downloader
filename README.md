@@ -1,4 +1,35 @@
-# A simple OMERO downloader GUI: `omero-downloader`
+# A simple OMERO downloader GUI 🪄📥
+
+`omero-downloader` is a very basic GUI application that provides a simplified
+workflow to download Images, Datasets or Projects from an OMERO instance.
+
+It was created in order to facilitate retrieval of files that were previously
+imported into OMERO but are needed back in their original (file) format to open
+them in tools that can not interface to OMERO directly or to transfer them to a
+non-OMERO location.
+
+## Benefits over exporting data through OMERO.web 🌐
+
+While it's possible to download data using [OMERO.web][omero-web], there are
+common problematic scenarios, e.g. if an object consists of multiple files (in
+which case the server will attempt to create a `.zip` file before handing it
+over to the client). For large datasets that can become an issue as (1) it puts
+load onto the server and (2) it requires server-side (temporary) storage space
+to create the container - which, depending on the setup, can lead to server
+crashes 💣.
+
+The `omero-downloader` is able to consume URLs copied from OMERO.web directly as
+well as OMERO identifiers like Dataset or Image IDs, making it very convenient
+to using OMERO.web for *identifying* 🕵️ your data and the downloader for
+actually *fetching* 🚚 it.
+
+## Benefits over exporting data through OMERO.insight
+
+TODO:
+
+* multiple objects?
+* directory structure (.vsi)?
+* something else?
 
 ## Installation instructions
 
@@ -40,3 +71,4 @@ the pixi env and using the provided icon.
 [pixi-bin]: https://github.com/prefix-dev/pixi/releases
 [ice-linux]: https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases
 [ice-win]: https://github.com/glencoesoftware/zeroc-ice-py-win-x86_64/releases
+[omero-web]: https://github.com/ome/omero-web
