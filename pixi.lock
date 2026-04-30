@@ -1739,7 +1739,7 @@ packages:
 - pypi: ./
   name: omero-downloader
   version: 0.2.1a11
-  sha256: 2680c6128d41625b479149267ff09dcffc01ad2e2081f5a707e27f2e4760ac6f
+  sha256: 7b188f82dd0bdcc03eb5b3ae6ab45f9cece1b90ffe53f7f6e27d0342a877f66f
   requires_dist:
   - ttkbootstrap>=1.20.2a0
   - zeroc-ice==3.6.5
