@@ -67,7 +67,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/ncurses-6.5-h2d0b736_3.conda
       - conda: https://prefix.dev/conda-forge/linux-64/numpy-2.4.3-py311h2e04523_0.conda
-      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a11-pyh4616a5c_0.conda
+      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a12-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.22.1-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/openjpeg-2.5.4-h55fea9a_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/openssl-3.6.2-h35e630c_0.conda
@@ -150,7 +150,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/win-64/mkl-2025.3.1-hac47afa_12.conda
       - conda: https://prefix.dev/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://prefix.dev/conda-forge/win-64/numpy-2.4.3-py311h65cb7f3_0.conda
-      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a11-pyh4616a5c_0.conda
+      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a12-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.22.1-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/onemkl-license-2025.3.1-h57928b3_12.conda
       - conda: https://prefix.dev/conda-forge/win-64/openjpeg-2.5.4-h0e57b4f_0.conda
@@ -255,7 +255,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://prefix.dev/conda-forge/linux-64/ncurses-6.6-hdb14827_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/numpy-2.4.3-py311h2e04523_0.conda
-      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a11-pyh4616a5c_0.conda
+      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a12-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.22.1-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/openjpeg-2.5.4-h55fea9a_0.conda
       - conda: https://prefix.dev/conda-forge/linux-64/openssl-3.6.2-h35e630c_0.conda
@@ -339,7 +339,7 @@ environments:
       - conda: https://prefix.dev/conda-forge/win-64/mkl-2025.3.1-hac47afa_12.conda
       - conda: https://prefix.dev/conda-forge/noarch/munkres-1.1.4-pyhd8ed1ab_1.conda
       - conda: https://prefix.dev/conda-forge/win-64/numpy-2.4.3-py311h65cb7f3_0.conda
-      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a11-pyh4616a5c_0.conda
+      - conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a12-pyh4616a5c_0.conda
       - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.22.1-pyhd8ed1ab_0.conda
       - conda: https://prefix.dev/conda-forge/win-64/onemkl-license-2025.3.1-h57928b3_12.conda
       - conda: https://prefix.dev/conda-forge/win-64/openjpeg-2.5.4-h0e57b4f_0.conda
@@ -1738,26 +1738,26 @@ packages:
   timestamp: 1773839131773
 - pypi: ./
   name: omero-downloader
-  version: 0.2.1a11
-  sha256: 7b188f82dd0bdcc03eb5b3ae6ab45f9cece1b90ffe53f7f6e27d0342a877f66f
+  version: 0.2.1a12
+  sha256: 65bce114dc8ffd4b6e8b3e0024a56e8ee1c80b642ccfe14d1d3929959b312d7b
   requires_dist:
   - ttkbootstrap>=1.20.2a0
   - zeroc-ice==3.6.5
   - omero-py>=5.20.0,<6
   - click>=8.2.1,<9
   requires_python: '>=3.11,<3.12.0a0'
-- conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a11-pyh4616a5c_0.conda
-  sha256: 403a56433e48f356f730374c2b846c2e329ad22901f49433f54783a6c90a404a
-  md5: 37a2126b486c0e3a0a18afcb7aeb3f17
+- conda: https://prefix.dev/imcf/noarch/omero-downloader-0.2.1.a12-pyh4616a5c_0.conda
+  sha256: e370b40aa164850726ce544d1d3d60f0d5b5a1aa90a3469282e8e91baff4bf10
+  md5: 52dedf36aa0be2e34828528af6ede057
   depends:
   - ttkbootstrap >=1.20.2.a0
-  - python >=3.11,<3.12.0a0
+  - python >=3.11.15,<3.12
   - python *
   - zeroc-ice ==3.6.5
   - omero-py >=5.20.0,<6
   - click >=8.2.1,<9
-  size: 21695
-  timestamp: 1777382018704
+  size: 22249
+  timestamp: 1777560539963
 - conda: https://prefix.dev/conda-forge/noarch/omero-py-5.22.1-pyhd8ed1ab_0.conda
   sha256: fc596f1d3c9b050a8ebe1278070c228b2a5a510d71f2a0b172155d2357422464
   md5: fd4411ede9f5a0d14096be5d25817dee
