@@ -69,13 +69,12 @@ ${env:PIXI_HOME}=$TargetPath
     omero-downloader
 ```
 
-
 ### Installing by cloning the repo and installing locally using `pixi`
 
-The easiest way to install the tool is through [pixi], although a classical
-Python `venv` setup is possible as well. In the latter case make sure to use the
-ZeroC-Ice wheels provided by Glencoe ([Windows][ice-win], [Linux][ice-linux])
-in order to avoid the time-consuming compilation step.
+When installing from the repository, it's also recommended to use [pixi],
+although a classical Python `venv` setup is possible as well. In the latter case
+make sure to use the ZeroC-Ice wheels provided by Glencoe ([Windows][ice-win],
+[Linux][ice-linux]) in order to avoid the time-consuming compilation step.
 
 Here, we're describing the setup using `pixi`:
 
