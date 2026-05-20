@@ -36,7 +36,9 @@ TODO:
 ### Preferred: via `pixi global`
 
 1. Get pixi as a temporary standalone executable or system-wide.
-1. (*Optional*) Set `PIXI_HOME` to define where the installation should go to.
+1. (*Optional*) Set `PIXI_HOME` to define where the installation should go to
+   (for example on Linux: `export PIXI_HOME=/opt/omerodl` or on Windows:
+   `${env:PIXI_HOME}="D:\OmeroDownloader"`).
 1. Run `pixi global install` as outlined below to install the OMERO downloader.
 
 ```Powershell
@@ -46,13 +48,13 @@ pixi global install `
     omero-downloader
 ```
 
-#### Example 1 (Windows 🟦)
+#### Example 1: Windows 🟦 without prerequisites
 
-The commands below will download the `pixi` executable to the target path
-defined in the first line (can be adjusted) and then use it to install the OMERO
-Downloader into that location. After completion, the downloader GUI can be
-found at `C:\ProgramData\OmeroDownloader\bin\omero-downloader-gui.exe`. Note
-that Pixi is **not** required after installation any more.
+The *PowerShell* commands below will download the `pixi` executable to the
+target path defined in the first line (can be adjusted) and then use it to
+install the OMERO Downloader into that location (NOTE: Pixi is **not** required
+after installation any more!). After completion, the downloader GUI can be found
+at `C:\ProgramData\OmeroDownloader\bin\omero-downloader-gui.exe`.
 
 ```Powershell
 $TargetPath = "C:\ProgramData\OmeroDownloader"
