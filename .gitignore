@@ -2,6 +2,9 @@ __pycache__/
 # pixi environments
 .pixi
 
+# result files from "pixi build"
+/*.conda
+
 # local configuration file
 /config.yml
 
