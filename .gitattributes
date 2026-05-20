@@ -1,2 +1,8 @@
-# SCM syntax highlighting & preventing 3-way merges
+# merge=binary: Tells Git to treat pixi.lock as a binary file. This stops Git
+#   from attempting automatic line-by-line merges, which frequently corrupts the
+#   file structure.
+# linguist-language=YAML: Forces GitHub (via GitHub Linguist) to properly
+#   syntax-highlight pixi.lock as YAML.
+# linguist-generated=true: Hides the file in pull request diffs and excludes it
+#   from your repository's language statistics
 pixi.lock merge=binary linguist-language=YAML linguist-generated=true
