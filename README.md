@@ -33,6 +33,45 @@ TODO:
 
 ## Installation instructions
 
+### Preferred: via `pixi global`
+
+1. Get pixi as a temporary standalone executable or system-wide.
+1. (*Optional*) Set `PIXI_HOME` to define where the installation should go to.
+1. Run `pixi global install` as outlined below to install the OMERO downloader.
+
+```Powershell
+pixi global install `
+    --channel "https://prefix.dev/conda-forge" `
+    --channel "https://prefix.dev/imcf" `
+    omero-downloader
+```
+
+#### Example 1 (Windows 🟦)
+
+The commands below will download the `pixi` executable to the target path
+defined in the first line (can be adjusted) and then use it to install the OMERO
+Downloader into that location. After completion, the downloader GUI can be
+found at `C:\ProgramData\OmeroDownloader\bin\omero-downloader-gui.exe`. Note
+that Pixi is **not** required after installation any more.
+
+```Powershell
+$TargetPath = "C:\ProgramData\OmeroDownloader"
+$PixiUri = "https://github.com/prefix-dev/pixi/releases/download/v0.67.2/pixi-x86_64-pc-windows-msvc.zip"
+New-Item -ItemType Directory $TargetPath
+Set-Location $TargetPath
+Invoke-WebRequest -Uri $PixiUri -OutFile "pixi.zip"
+tar xf pixi.zip
+Remove-Item "pixi.zip"
+${env:PIXI_HOME}=$TargetPath
+.\pixi.exe global install `
+    --channel "https://prefix.dev/conda-forge" `
+    --channel "https://prefix.dev/imcf" `
+    omero-downloader
+```
+
+
+### Installing by cloning the repo and installing locally using `pixi`
+
 The easiest way to install the tool is through [pixi], although a classical
 Python `venv` setup is possible as well. In the latter case make sure to use the
 ZeroC-Ice wheels provided by Glencoe ([Windows][ice-win], [Linux][ice-linux])
