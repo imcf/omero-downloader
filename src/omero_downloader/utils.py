@@ -174,7 +174,7 @@ def get_config_path(config=""):
     ```
 
     >>> print(get_config_path())
-    ... /px/envs/omero-downloader/etc/omero-downloader.yml
+    ... /home/user/.pixi/envs/omero-downloader/etc/omero-downloader.yml
 
 
     In a (local) pixi installation:
