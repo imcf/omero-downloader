@@ -9,7 +9,12 @@ import os
 import sys
 from pathlib import Path
 
-from .utils import extract_datatype_and_ids, load_all_db_entries, get_config_path
+from .utils import (
+    extract_datatype_and_ids,
+    load_all_db_entries,
+    get_config_path,
+    example_conf,
+)
 
 
 class OmeroDownloaderApp:
@@ -24,10 +29,15 @@ class OmeroDownloaderApp:
             The root window for the Tkinter application.
         config : str, optional
             The path to a configuration file, by default "" in which case the
-            application will attempt to automatically locate the file by
+            application will attempt to automatically locate a config file by
             checking at pre-defined locations.
         """
-        self.config_path = get_config_path(config)
+        try:
+            self.config_path = get_config_path(config)
+        except FileNotFoundError:
+            print(f"Example config:\n---\n{example_conf}")
+            raise SystemExit
+
         self.server_list = load_all_db_entries(self.config_path)
         self.root = root
         self.root.title("OMERO Downloader")

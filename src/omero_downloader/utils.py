@@ -1,8 +1,19 @@
 """Utility functions."""
 
 import re
-import yaml
+import sys
 from pathlib import Path
+
+import yaml
+
+example_conf = yaml.dump(
+    {
+        "databases": {
+            "Local": {"address": "localhost"},
+            "Institute": {"address": "omero.institute.example"},
+        }
+    }
+)
 
 
 def extract_datatype_and_ids(url):
@@ -74,76 +85,169 @@ def load_all_db_entries(config_path):
 def get_config_path(config=""):
     """Locate the configuration file path for the OMERO Downloader.
 
-    If the current environment is using this package through an "editable"
-    installation, a regular one (e.g. through `pixi install` or by using a
-    setup created by `pixi-pack`) and try to identify the "base" path where the
-    config file can be found.
+    Look at various pre-defined locations for a configuration file - see the
+    **Notes** section for details and precedence on the searched locations.
 
-    In case the path to a configuration file is given explicitly, it is
-    converted into a `pathlib.Path` object and checked for existence.
+    In case a path is specified explicitly, that path is validated but no search
+    will be performed.
 
     Parameters
     ----------
     config : str, optional
         The path to a configuration file, by default "" in which case the
-        application will attempt to automatically locate the file by checking at
-        pre-defined locations - see the *Example* section below for details.
+        function will attempt to automatically locate a config file by checking
+        a number of pre-defined locations - see the **Notes** for details.
 
     Returns
     -------
     pathlib.Path
-        Path to the 'config.yml' file.
+        Path to an OMERO-Downloader configuration file.
 
     Raises
     ------
     FileNotFoundError
-        If the 'config.yml' file does not exist in the expected location. The
-        contents of an example configuration will be printed in the exception
-        message in order to simplify bootstrapping the setup.
+        Thrown when no config file can be found at any of the searched locations
+        or in case the provided path doesn't exist.
+
+    Notes
+    -----
+    When performing the search, each location will be checked for two files in
+    this order:
+
+    * `omero-downloader.yml`
+    * `config.yml`
+
+    The **first file** that is found will be used as the configuration.
+
+    The locations to be checked depend on the environment the package is running
+    in, which is determined by the path structure where *this* file (`utils.py`)
+    is located.
+
+    Three different situations are being considered:
+
+    (1) An "editable" installation (the parent folder two levels up is called
+    `src`): the folder containing the `src` directory will be searched, which
+    corresponds to the project-root when running from a cloned repository.
+
+    (2) A "pixi global" installation (the parent folder 5 levels up is
+    called `omero-downloader` and the one 6 levels up is called `envs`): config
+    files will be searched in the folder `omero-downloader` and in a subfolder
+    named `etc`. This corresponds to the installation location when using the
+    setup approach via `pixi global install`.
+
+    (3) A local / custom installation (when none of the above conditions match):
+    the parent folder 7 levels up will be searched, plus a subfolder of it named
+    `etc`. This corresponds to the root folder of the installation when using
+    `pixi install` on the project itself.
 
     Example
     -------
 
-    In an editable installation:
+    In an editable installation, e.g. like this:
 
-    >>> print(__file__)
-    ... /opt/odl/src/omero_downloader/utils.py
+    ```
+    /home/user/development/
+    └── omero-downloader
+        ├── config.yml
+        └── src
+            └── omero_downloader
+                └── utils.py
+    ```
+
     >>> print(get_config_path())
-    ... /opt/odl/config.yml
+    ... /home/user/development/omero-downloader/config.yml
 
 
-    In a regular installation:
+    In a global pixi installation:
 
-    >>> print(__file__)
-    ... /opt/odl/.pixi/envs/def/lib/python3.11/site-packages/omero_downloader/utils.py
+    ```
+    /home/user/.pixi/
+    └── envs
+        └── omero-downloader
+            ├── etc
+            │   └── omero-downloader.yml
+            └── lib
+                └── python3.11
+                    └── site-packages
+                        └── omero_downloader
+                            └── utils.py
+    ```
+
     >>> print(get_config_path())
-    ... /opt/odl/config.yml
+    ... /px/envs/omero-downloader/etc/omero-downloader.yml
+
+
+    In a (local) pixi installation:
+
+    ```
+    /opt/omero-downloader/
+    ├── .pixi
+    │   └── envs
+    │       └── default
+    │           └── lib
+    │               └── python3.11
+    │                   └── site-packages
+    │                       └── omero_downloader
+    │                           └── utils.py
+    └── etc
+        └── omero-downloader.yml
+    ```
+
+    >>> print(get_config_path())
+    ... /opt/omero-downloader/etc/omero-downloader.yml
     """
-    if config != "":
-        config_path = Path(config)
-    else:
-        mod_dir = Path(__file__)
-        editable = True if mod_dir.parents[1].name == "src" else False
-        # print(f"Running from 'editable' installation: {editable}")
-        up = 2 if editable else 7
-        config_dir = mod_dir.parents[up]
-        config_path = config_dir / "config.yml"
+    locations = []
+    config_path = None
 
-    if not config_path.exists():
-        example_conf = {
-            "databases": {
-                "Local": {"address": "localhost"},
-                "Institute": {"address": "omero.institute.example"},
-            }
-        }
-        example_conf_yaml = yaml.dump(example_conf)
-        raise FileNotFoundError(
-            f"Unable to find config file at: {config_path}\n"
-            "\n"
-            "Example configuration file:\n"
-            "---\n"
-            f"{example_conf_yaml}"
-        )
+    print(f"sys.exec_prefix: {Path(sys.exec_prefix)}")
+    print(f"sys.base_prefix: {Path(sys.base_prefix)}")
+
+    if config != "":
+        locations.append(Path(config).absolute())
+    else:
+        print("No config file specified, trying to find it ourselves...")
+        # check a few locations for the config file, depending on where *this*
+        # file is actually located:
+        mod_dir = Path(__file__).absolute()
+
+        editable = False
+        if mod_dir.parents[1].name == "src":
+            editable = True
+        if editable:
+            print("Found 'editable' installation.")
+            locations.append(mod_dir.parents[2] / "omero-downloader.yml")
+            locations.append(mod_dir.parents[2] / "config.yml")
+
+        pixi_global = False
+        if (
+            mod_dir.parents[4].name == "omero-downloader"
+            and mod_dir.parents[5].name == "envs"
+        ):
+            pixi_global = True
+
+        if pixi_global:
+            print("Found 'pixi global' installation.")
+            locations.append(mod_dir.parents[4] / "omero-downloader.yml")
+            locations.append(mod_dir.parents[4] / "config.yml")
+            locations.append(mod_dir.parents[4] / "etc" / "omero-downloader.yml")
+            locations.append(mod_dir.parents[4] / "etc" / "config.yml")
+
+        if not pixi_global and not editable:
+            print("Assuming local / custom installation.")
+            locations.append(mod_dir.parents[7] / "omero-downloader.yml")
+            locations.append(mod_dir.parents[7] / "config.yml")
+            locations.append(mod_dir.parents[7] / "etc" / "omero-downloader.yml")
+            locations.append(mod_dir.parents[7] / "etc" / "config.yml")
+
+    for candidate in locations:
+        print(f"Checking for config file at: {candidate}")
+        if candidate.exists():
+            config_path = candidate
+            break
+
+    if not config_path:
+        print("\n===== ERROR: unable to find config file, stopping! =====\n")
+        raise FileNotFoundError
 
     print(f"Using config file: {config_path}")
 
