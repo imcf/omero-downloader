@@ -199,9 +199,6 @@ def get_config_path(config=""):
     locations = []
     config_path = None
 
-    print(f"sys.exec_prefix: {Path(sys.exec_prefix)}")
-    print(f"sys.base_prefix: {Path(sys.base_prefix)}")
-
     if config != "":
         locations.append(Path(config).absolute())
     else:
