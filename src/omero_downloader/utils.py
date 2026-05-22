@@ -206,8 +206,10 @@ def get_config_path(config=""):
         # check a few locations for the config file, depending on where *this*
         # file is actually located:
         mod_dir = Path(__file__).absolute()
+        print(f"mod_dir: {mod_dir}")
 
         editable = False
+        print(mod_dir.parents[1].name)
         if mod_dir.parents[1].name == "src":
             editable = True
             print("Found 'editable' installation.")
@@ -215,6 +217,8 @@ def get_config_path(config=""):
             locations.append(mod_dir.parents[2] / "config.yml")
 
         pixi_global = False
+        print(mod_dir.parents[4].name)
+        print(mod_dir.parents[5].name)
         if (
             mod_dir.parents[4].name == "omero-downloader"
             and mod_dir.parents[5].name == "envs"
