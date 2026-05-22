@@ -208,7 +208,9 @@ def get_config_path(config=""):
         mod_dir = Path(__file__).absolute()
         # print(f"mod_dir: {mod_dir}")
 
+        pixi_global = False
         editable = False
+
         src_dir = mod_dir.parents[1].name
         # print(f"Checking for 'src' dir: {src_dir}")
         if src_dir == "src":
@@ -217,7 +219,6 @@ def get_config_path(config=""):
             locations.append(mod_dir.parents[2] / "omero-downloader.yml")
             locations.append(mod_dir.parents[2] / "config.yml")
 
-        pixi_global = False
         # on Windows, nesting is one level less as envs don't seem to have a
         # Python-version-specific folder above "site-packages", so adjust:
         proj_up = 4 if sys.platform != "win32" else 3
