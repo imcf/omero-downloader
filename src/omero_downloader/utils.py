@@ -211,14 +211,6 @@ def get_config_path(config=""):
         pixi_global = False
         editable = False
 
-        src_dir = mod_dir.parents[1].name
-        # print(f"Checking for 'src' dir: {src_dir}")
-        if src_dir == "src":
-            editable = True
-            print("Found 'src' dir, assuming editable installation.")
-            locations.append(mod_dir.parents[2] / "omero-downloader.yml")
-            locations.append(mod_dir.parents[2] / "config.yml")
-
         # on Windows, nesting is one level less as envs don't seem to have a
         # Python-version-specific folder above "site-packages", so adjust:
         proj_up = 4 if sys.platform != "win32" else 3
@@ -232,6 +224,14 @@ def get_config_path(config=""):
             locations.append(mod_dir.parents[proj_up] / "config.yml")
             locations.append(mod_dir.parents[proj_up] / "etc" / "omero-downloader.yml")
             locations.append(mod_dir.parents[proj_up] / "etc" / "config.yml")
+
+        src_dir = mod_dir.parents[1].name
+        # print(f"Checking for 'src' dir: {src_dir}")
+        if not pixi_global and src_dir == "src":
+            editable = True
+            print("Found 'src' dir, assuming editable installation.")
+            locations.append(mod_dir.parents[2] / "omero-downloader.yml")
+            locations.append(mod_dir.parents[2] / "config.yml")
 
         if not pixi_global and not editable:
             print("Assuming local / custom installation.")
