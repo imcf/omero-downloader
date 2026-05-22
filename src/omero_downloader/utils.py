@@ -210,6 +210,7 @@ def get_config_path(config=""):
 
         pixi_global = False
         editable = False
+        search_base = mod_dir.parents[7]
 
         # on Windows, nesting is one level less as envs don't seem to have a
         # Python-version-specific folder above "site-packages", so adjust:
@@ -220,25 +221,22 @@ def get_config_path(config=""):
         if proj_dir == "omero-downloader" and envs_dir == "envs":
             pixi_global = True
             print("Found dirs expected in a 'pixi global' installation.")
-            locations.append(mod_dir.parents[proj_up] / "omero-downloader.yml")
-            locations.append(mod_dir.parents[proj_up] / "config.yml")
-            locations.append(mod_dir.parents[proj_up] / "etc" / "omero-downloader.yml")
-            locations.append(mod_dir.parents[proj_up] / "etc" / "config.yml")
+            search_base = mod_dir.parents[proj_up]
 
         src_dir = mod_dir.parents[1].name
         # print(f"Checking for 'src' dir: {src_dir}")
         if not pixi_global and src_dir == "src":
             editable = True
             print("Found 'src' dir, assuming editable installation.")
-            locations.append(mod_dir.parents[2] / "omero-downloader.yml")
-            locations.append(mod_dir.parents[2] / "config.yml")
+            search_base = mod_dir.parents[2]
 
         if not pixi_global and not editable:
-            print("Assuming local / custom installation.")
-            locations.append(mod_dir.parents[7] / "omero-downloader.yml")
-            locations.append(mod_dir.parents[7] / "config.yml")
-            locations.append(mod_dir.parents[7] / "etc" / "omero-downloader.yml")
-            locations.append(mod_dir.parents[7] / "etc" / "config.yml")
+            print("Assuming local / custom installation, using default search base.")
+
+        locations.append(search_base / "etc" / "omero-downloader.yml")
+        locations.append(search_base / "etc" / "config.yml")
+        locations.append(search_base / "omero-downloader.yml")
+        locations.append(search_base / "config.yml")
 
     for candidate in locations:
         print(f"Checking for config file at: {candidate}")
