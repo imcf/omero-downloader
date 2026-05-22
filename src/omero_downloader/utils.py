@@ -210,7 +210,6 @@ def get_config_path(config=""):
         editable = False
         if mod_dir.parents[1].name == "src":
             editable = True
-        if editable:
             print("Found 'editable' installation.")
             locations.append(mod_dir.parents[2] / "omero-downloader.yml")
             locations.append(mod_dir.parents[2] / "config.yml")
@@ -221,8 +220,6 @@ def get_config_path(config=""):
             and mod_dir.parents[5].name == "envs"
         ):
             pixi_global = True
-
-        if pixi_global:
             print("Found 'pixi global' installation.")
             locations.append(mod_dir.parents[4] / "omero-downloader.yml")
             locations.append(mod_dir.parents[4] / "config.yml")
