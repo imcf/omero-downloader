@@ -218,21 +218,19 @@ def get_config_path(config=""):
             locations.append(mod_dir.parents[2] / "config.yml")
 
         pixi_global = False
-        proj_dir = mod_dir.parents[4].name
-        envs_dir = mod_dir.parents[5].name
-        print(f"Checking project and envs dirs: '{proj_dir}' / '{envs_dir}'")
         # on Windows, nesting is one level less as envs don't seem to have a
         # Python-version-specific folder above "site-packages", so adjust:
-        if sys.platform == "win32":
-            proj_dir = mod_dir.parents[3].name
-            envs_dir = mod_dir.parents[4].name
+        proj_up = 4 if sys.platform != "win32" else 3
+        proj_dir = mod_dir.parents[proj_up].name
+        envs_dir = mod_dir.parents[proj_up + 1].name
+        print(f"Checking project and envs dirs: '{proj_dir}' / '{envs_dir}'")
         if proj_dir == "omero-downloader" and envs_dir == "envs":
             pixi_global = True
             print("Found dirs expected in a 'pixi global' installation.")
-            locations.append(mod_dir.parents[4] / "omero-downloader.yml")
-            locations.append(mod_dir.parents[4] / "config.yml")
-            locations.append(mod_dir.parents[4] / "etc" / "omero-downloader.yml")
-            locations.append(mod_dir.parents[4] / "etc" / "config.yml")
+            locations.append(mod_dir.parents[proj_up] / "omero-downloader.yml")
+            locations.append(mod_dir.parents[proj_up] / "config.yml")
+            locations.append(mod_dir.parents[proj_up] / "etc" / "omero-downloader.yml")
+            locations.append(mod_dir.parents[proj_up] / "etc" / "config.yml")
 
         if not pixi_global and not editable:
             print("Assuming local / custom installation.")
