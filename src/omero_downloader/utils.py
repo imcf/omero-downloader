@@ -221,6 +221,11 @@ def get_config_path(config=""):
         proj_dir = mod_dir.parents[4].name
         envs_dir = mod_dir.parents[5].name
         print(f"Checking project and envs dirs: '{proj_dir}' / '{envs_dir}'")
+        # on Windows, nesting is one level less as envs don't seem to have a
+        # Python-version-specific folder above "site-packages", so adjust:
+        if sys.platform == "win32":
+            proj_dir = mod_dir.parents[3].name
+            envs_dir = mod_dir.parents[4].name
         if proj_dir == "omero-downloader" and envs_dir == "envs":
             pixi_global = True
             print("Found dirs expected in a 'pixi global' installation.")
