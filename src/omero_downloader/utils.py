@@ -206,11 +206,11 @@ def get_config_path(config=""):
         # check a few locations for the config file, depending on where *this*
         # file is actually located:
         mod_dir = Path(__file__).absolute()
-        print(f"mod_dir: {mod_dir}")
+        # print(f"mod_dir: {mod_dir}")
 
         editable = False
         src_dir = mod_dir.parents[1].name
-        print(f"Checking for 'src' dir: {src_dir}")
+        # print(f"Checking for 'src' dir: {src_dir}")
         if src_dir == "src":
             editable = True
             print("Found 'src' dir, assuming editable installation.")
@@ -223,7 +223,7 @@ def get_config_path(config=""):
         proj_up = 4 if sys.platform != "win32" else 3
         proj_dir = mod_dir.parents[proj_up].name
         envs_dir = mod_dir.parents[proj_up + 1].name
-        print(f"Checking project and envs dirs: '{proj_dir}' / '{envs_dir}'")
+        # print(f"Checking project and envs dirs: '{proj_dir}' / '{envs_dir}'")
         if proj_dir == "omero-downloader" and envs_dir == "envs":
             pixi_global = True
             print("Found dirs expected in a 'pixi global' installation.")
