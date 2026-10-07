@@ -18,25 +18,46 @@ load onto the server and (2) it requires server-side (temporary) storage space
 to create the container - which, depending on the setup, can lead to server
 crashes 💣.
 
-The `omero-downloader` is able to consume URLs copied from OMERO.web directly as
-well as OMERO identifiers like Dataset or Image IDs, making it very convenient
-to using OMERO.web for *identifying* 🕵️ your data and the downloader for
-actually *fetching* 🚚 it.
+The `omero-downloader` does not suffer from these issues and make downloading
+easy (see usage instructions below).
 
 ## Benefits over exporting data through OMERO.insight
 
-TODO:
+The main benefit of using OMERO Downloader over [OMERO.insight][omero-insight]
+is simplicity. With OMERO Downloader the user simply copy-pastes the IDs or
+links of selected objects from [OMERO.web][omero-web] into the Downloader and
+presses the download button. This makes the process of _identifying_ 🕵️ and
+_fetching_ 🚚 data straightforward and quick while the user workflow remains
+centered on [OMERO.web][omero-web].
 
-* multiple objects?
-* directory structure (.vsi)?
-* something else?
+## Usage 📘
+
+The `omero-downloader` is able to consume URLs copied from OMERO.web directly as
+well as OMERO identifiers like Dataset or Image IDs, making it very convenient
+to using [OMERO.web][omero-web] for _identifying_ 🕵️ your data and the
+Downloader for actually _fetching_ 🚚 it.
+
+This is straightforward:
+
+1. In OMERO.web, select the Projects, Datasets, or Images that you want to
+   download and copy their URL:
+
+   <img src="resources/artwork/screenshot-omero-web.png" width="200" height="200" />
+
+1. Paste the URL into the OMERO Downloader and select the object type (Project,
+   Dataset, or Image). Input target storage path, URL of the source OMERO server
+   and user credentials:
+
+   <img src="resources/artwork/screenshot-omero-downloader.png" width="200" />
+
+1. Click button **Download all images**.
 
 ## Installation instructions
 
 ### Preferred: via `pixi global`
 
 1. Get pixi as a temporary standalone executable or system-wide.
-1. (*Optional*) Set `PIXI_HOME` to define where the installation should go to
+1. (_Optional_) Set `PIXI_HOME` to define where the installation should go to
    (for example on Linux: `export PIXI_HOME=/opt/omerodl` or on Windows:
    `${env:PIXI_HOME}="D:\OmeroDownloader"`).
 1. Run `pixi global install` as outlined below to install the OMERO downloader.
@@ -50,7 +71,7 @@ pixi global install `
 
 #### Example 1: Windows 🟦 without prerequisites
 
-The *PowerShell* commands below will download the `pixi` executable to the
+The _PowerShell_ commands below will download the `pixi` executable to the
 target path defined in the first line (can be adjusted) and then use it to
 install the OMERO Downloader into that location (NOTE: Pixi is **not** required
 after installation any more!). After completion, the downloader GUI can be found
@@ -104,11 +125,18 @@ $PATH_TO_REPO\.pixi\envs\default\Scripts\omero-downloader-gui
 
 ### Desktop Shortcut
 
-TODO: explain how to create a Desktop shortcut / Start Menu entry pointing to
-the pixi env and using the provided icon.
+To create a Desktop Shortcut under Windows:
+
+1. Right-click on the Desktop and select **New > Shortcut**.
+1. Paste the path above (e.g.
+   `C:\ProgramData\OmeroDownloader\bin\omero-downloader-gui.exe`)
+1. Type in the name **OMERO Downloader**.
+1. Confirm.
 
 [pixi]: https://pixi.sh/
 [pixi-bin]: https://github.com/prefix-dev/pixi/releases
-[ice-linux]: https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases
+[ice-linux]:
+  https://github.com/glencoesoftware/zeroc-ice-py-linux-x86_64/releases
 [ice-win]: https://github.com/glencoesoftware/zeroc-ice-py-win-x86_64/releases
+[omero-insight]: https://github.com/ome/omero-insight
 [omero-web]: https://github.com/ome/omero-web
