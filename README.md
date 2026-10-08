@@ -42,13 +42,13 @@ This is straightforward:
 1. In OMERO.web, select the Projects, Datasets, or Images that you want to
    download and copy their URL:
 
-   <img src="resources/artwork/screenshot-omero-web.png" width="200" height="200" />
+   ![omero-web](resources/artwork/screenshot-omero-web.png)
 
 1. Paste the URL into the OMERO Downloader and select the object type (Project,
    Dataset, or Image). Input target storage path, URL of the source OMERO server
    and user credentials:
 
-   <img src="resources/artwork/screenshot-omero-downloader.png" width="200" />
+   ![omero-downloader-gui](resources/artwork/screenshot-omero-downloader.png)
 
 1. Click button **Download all images**.
 
