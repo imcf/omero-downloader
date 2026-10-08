@@ -1,7 +1,8 @@
 # A simple OMERO downloader GUI 🪄📥
 
-`omero-downloader` is a very basic GUI application that provides a simplified
-workflow to download Images, Datasets or Projects from an OMERO instance.
+`omero-downloader-gui` is a very basic GUI application that provides a
+simplified workflow to download Images, Datasets or Projects from an OMERO
+instance.
 
 It was created in order to facilitate retrieval of files that were previously
 imported into OMERO but are needed back in their original (file) format to open
@@ -18,8 +19,8 @@ load onto the server and (2) it requires server-side (temporary) storage space
 to create the container - which, depending on the setup, can lead to server
 crashes 💣.
 
-The `omero-downloader` does not suffer from these issues and make downloading
-easy (see usage instructions below).
+The `omero-downloader-gui` does not suffer from these issues and make
+downloading easy (see usage instructions below).
 
 ## Benefits over exporting data through OMERO.insight
 
@@ -32,10 +33,10 @@ centered on [OMERO.web][omero-web].
 
 ## Usage 📘
 
-The `omero-downloader` is able to consume URLs copied from OMERO.web directly as
-well as OMERO identifiers like Dataset or Image IDs, making it very convenient
-to using [OMERO.web][omero-web] for _identifying_ 🕵️ your data and the
-Downloader for actually _fetching_ 🚚 it.
+The `omero-downloader-gui` is able to consume URLs copied from OMERO.web
+directly as well as OMERO identifiers like Dataset or Image IDs, making it very
+convenient to using [OMERO.web][omero-web] for _identifying_ 🕵️ your data and
+the Downloader for actually _fetching_ 🚚 it.
 
 This is straightforward:
 
@@ -48,7 +49,7 @@ This is straightforward:
    Dataset, or Image). Input target storage path, URL of the source OMERO server
    and user credentials:
 
-   ![omero-downloader-gui](resources/artwork/screenshot-omero-downloader.png)
+   ![omero-downloader-gui](resources/artwork/screenshot-omero-downloader-gui.png)
 
 1. Click button **Download all images**.
 
@@ -66,7 +67,7 @@ This is straightforward:
 pixi global install `
     --channel "https://prefix.dev/conda-forge" `
     --channel "https://prefix.dev/imcf" `
-    omero-downloader
+    omero-downloader-gui
 ```
 
 #### Example 1: Windows 🟦 without prerequisites
@@ -89,7 +90,7 @@ ${env:PIXI_HOME}=$TargetPath
 .\pixi.exe global install `
     --channel "https://prefix.dev/conda-forge" `
     --channel "https://prefix.dev/imcf" `
-    omero-downloader
+    omero-downloader-gui
 ```
 
 ### Installing by cloning the repo and installing locally using `pixi`

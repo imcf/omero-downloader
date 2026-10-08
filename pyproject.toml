@@ -10,7 +10,7 @@ dependencies = [
     "click>=8.2.1,<9",
 ]
 description = "Simple GUI for downloading objects from an OMERO server."
-name = "omero-downloader"
+name = "omero-downloader-gui"
 readme = "README.md"
 requires-python = ">=3.11,<3.12.0a0"
 version = "0.3.0.a4"
@@ -63,14 +63,14 @@ omero_downloader = { path = ".", editable = true }
 
 [tool.pixi.dependencies]
 click = ">=8.2.1,<9"
-omero-downloader = ">=0.3.0.a4,<0.4"
+omero-downloader-gui = ">=0.3.0.a4,<0.4"
 omero-py = ">=5.20.0,<6"
 ttkbootstrap = ">=1.20.2a0,<2"
 zeroc-ice = "==3.6.5"
 python = ">=3.11.15,<3.12"
 
 [tool.pixi.package]
-name = "omero-downloader"
+name = "omero-downloader-gui"
 version = "0.3.0.a4"
 
 [tool.pixi.package.build]
